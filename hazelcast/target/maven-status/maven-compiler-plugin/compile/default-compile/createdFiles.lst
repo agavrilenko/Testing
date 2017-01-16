@@ -1,0 +1,7 @@
+org\my\testing\hazelcast\topic\TopicMonitor.class
+org\my\testing\hazelcast\queue\GettingStarted.class
+org\my\testing\hazelcast\topic\MessagePublisher.class
+org\my\testing\hazelcast\queue\GettingStartedClient.class
+org\my\testing\hazelcast\topic\TopicClient.class
+org\my\testing\hazelcast\topic\MyEvent.class
+org\my\testing\hazelcast\queue\StartServer.class

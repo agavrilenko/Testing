@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<jaxb:bindings
+  version="2.1"
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:annox="http://annox.dev.java.net"
+  jaxb:extensionBindingPrefixes="xjc annox">
+  <jaxb:bindings schemaLocation="../../../../target/sources/BOOT-INF/classes/schema/operations.xsd" node="/xs:schema">
+      <jaxb:bindings node="xs:complexType[@name='GetOperationRequest']">
+          <annox:annotate>
+               <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name="GetOperationRequest" />
+          </annox:annotate>
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='GetOperationResponse']">
+                  <annox:annotate>
+                       <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name="GetOperationResponse" />
+                  </annox:annotate>
+                </jaxb:bindings>
+  </jaxb:bindings>
+  </jaxb:bindings>

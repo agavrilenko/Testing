@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cxf="http://camel.apache.org/schema/cxf"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring-2.18.1.xsd
+        http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+
+    <bean id="helloProducer" class="org.my.boot.handler.HelloHandler"/>
+    <!--<bean id="camelCxfBinding" class="org.apache.camel.component.cxf.DefaultCxfBinding"/>-->
+    <!--<bean id="usersController" class="org.my.boot.controller.UsersController"/>-->
+    <!--wsdlURL="classpath:service/hello_world.wsdl"-->
+    <!--wsdlURL="${cxf.uri}/?wsdl"-->
+    <cxf:cxfEndpoint id="cxfClient" address="${cxf.uri}"
+                     wsdlURL="classpath:service/hello_world.wsdl"
+                     serviceClass="org.my.enterprise.MyService"
+                     endpointName="s:MyService"
+                     serviceName="s:ServicePorts"
+                     xmlns:s="http://org/my/enterprise">
+        <cxf:dataBinding>
+            <bean class="org.apache.cxf.jaxb.JAXBDataBinding">
+                <constructor-arg>
+                    <bean factory-method="newInstance" class="javax.xml.bind.JAXBContext">
+                        <constructor-arg value="org.my.enterprise"/>
+                    </bean>
+                </constructor-arg>
+            </bean>
+        </cxf:dataBinding>
+    </cxf:cxfEndpoint>
+    <!--<jaxrs:server id="restService"-->
+    <!--address="http://localhost:${CXFTestSupport.port2}/CxfRsRouterTest/rest"-->
+    <!--staticSubresourceResolution="true">-->
+    <!--<jaxrs:serviceBeans>-->
+    <!--<ref bean="customerService"/>-->
+    <!--</jaxrs:serviceBeans>-->
+    <!--</jaxrs:server>-->
+
+    <bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider"/>
+    <bean class="org.my.boot.client.handler.SimpleResponseProcessor" id="simpleResponseProcessor"/>
+    <!--<bean id="customerService" class="org.apache.camel.component.cxf.jaxrs.testbean.CustomerService" />-->
+
+    <!-- Defined the server endpoint to create the cxf-rs consumer http://localhost:${CXFTestSupport.port1} -->
+    <cxf:rsServer id="rsServer" address="/serv"
+                  serviceClass="org.my.boot.client.service.RestService"
+                  loggingFeatureEnabled="true" loggingSizeLimit="20" skipFaultLogging="true">
+        <cxf:providers>
+            <ref bean="jsonProvider"/>
+        </cxf:providers>
+    </cxf:rsServer>
+
+    <!-- Defined the client endpoint to create the cxf-rs producer -->
+
+    <camel:camelContext id="client-camel-context" autoStartup="true">
+        <camel:dataFormats>
+            <!-- here we define a Json data format with the id jack and that it should use the TestPojo as the class type when
+                 doing unmarshal. The unmarshalTypeName is optional, if not provided Camel will use a Map as the type -->
+            <camel:json id="jack" library="Jackson" unmarshalTypeName="org.my.boot.client.model.Employee"/>
+        </camel:dataFormats>
+        <camel:route id="client_route">
+            <!--call rest client-->
+            <camel:from uri="cxfrs://bean://rsServer?bindingStyle=SimpleConsumer"/>
+            <camel:log message="Rest came to me : ${body}"/>
+            <camel:log message="Url is {{cxf.uri}}"/>
+            <camel:unmarshal ref="jack"/>
+            <camel:log message="Object unmarshalled : ${body}"/>
+            <camel:process ref="domainToEntProcessor"/>
+            <camel:split>
+                <camel:groovy>request.body</camel:groovy>
+                <camel:setHeader headerName="operationNamespace">
+                    <camel:constant>http://org/my/enterprise</camel:constant>
+                </camel:setHeader>
+                <camel:setHeader headerName="operationName">
+                    <camel:constant>processOperation</camel:constant>
+                </camel:setHeader>
+                <!--<camel:to uri="cxf://{{cxf.uri}}?defaultOperationName=processOperation&amp;serviceClass=org.my.enterprise.ServicePorts"/>-->
+                <!--call WS-->
+                <camel:log message="Soap Body is ${body}"/>
+                <camel:to uri="cxf:bean:cxfClient"/>
+                <camel:process ref="simpleResponseProcessor"/>
+                <camel:log message="Response is ${body}"/>
+            </camel:split>
+            <camel:transform>
+                <camel:groovy>request.body="OK"</camel:groovy>
+            </camel:transform>
+            <camel:log message="Before sending ${body}"/>
+        </camel:route>
+
+    </camel:camelContext>
+
+</beans>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://org/my/enterprise"
+           xmlns="http://org/my/enterprise">
+    <xs:complexType name="SimpleGetCriterion">
+        <xs:sequence>
+            <xs:element name="number" type="xs:string"/>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ComplexGetCriterion">
+        <xs:sequence>
+            <xs:element name="number" type="xs:string"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Employee">
+        <xs:sequence>
+            <xs:element name="position" type="xs:string"/>
+            <xs:element name="person" type="Person"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Person">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="GetCriteria">
+        <xs:choice>
+            <xs:element name="simpleGetCriterion" type="SimpleGetCriterion"/>
+            <xs:element name="complexGetCriterion" type="ComplexGetCriterion"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="OutputBody">
+        <xs:choice>
+            <xs:element name="employee" type="Employee"/>
+            <xs:element name="person" type="Person"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="GetOperationRequest">
+        <xs:sequence>
+            <xs:element name="body" type="GetCriteria"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="GetOperationResponse">
+        <xs:sequence>
+            <xs:element name="body" type="OutputBody"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions name="HelloService"
+                  targetNamespace="http://org/my/enterprise"
+                  xmlns:msg="http://org/my/enterprise"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:p="http://org/my/enterprise"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <wsdl:types>
+        <xsd:schema>
+            <xsd:import namespace="http://org/my/enterprise" schemaLocation="../schema/operations.xsd"/>
+        </xsd:schema>
+
+    </wsdl:types>
+
+    <wsdl:message name="requestOperation">
+        <wsdl:part name="parameters" type="p:GetOperationRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="responseOperation">
+        <wsdl:part name="parammeters" type="p:GetOperationResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="MyService">
+        <wsdl:operation name="processOperation">
+            <wsdl:input name="requestOperation" message="msg:requestOperation"/>
+            <wsdl:output name="responseOperation" message="msg:responseOperation"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="MyServiceHttpBinding" type="msg:MyService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="processOperation">
+            <soap:operation soapAction="http://org/my/enterprise/1.0/getOperation"/>
+            <wsdl:input name="requestOperation">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="responseOperation">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="ServicePorts">
+        <wsdl:port name="MyService" binding="msg:MyServiceHttpBinding"/>
+    </wsdl:service>
+</wsdl:definitions>

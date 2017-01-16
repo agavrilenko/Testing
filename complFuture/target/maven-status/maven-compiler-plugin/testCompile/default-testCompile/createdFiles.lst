@@ -1,0 +1,12 @@
+org\my\testing\concurrency\complFeature\ComplFutureTest$1.class
+org\my\testing\concurrency\streams\StreamTest$Bar.class
+org\my\testing\concurrency\streams\StreamTest$1.class
+org\my\testing\concurrency\streams\StreamTest$Foo.class
+org\my\testing\concurrency\streams\StreamTest$1$1.class
+org\my\testing\concurrency\streams\StreamTest$Nested.class
+org\my\testing\concurrency\streams\StreamTest$Outer.class
+org\my\testing\newFeatures\NewFeaturesTest.class
+org\my\testing\concurrency\streams\StreamTest.class
+org\my\testing\concurrency\complFeature\ComplFutureTest.class
+org\my\testing\concurrency\streams\StreamTest$Inner.class
+org\my\testing\concurrency\streams\StreamTest$Person.class

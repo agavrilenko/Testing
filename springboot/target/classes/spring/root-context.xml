@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cxf="http://camel.apache.org/schema/cxf"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring-2.18.1.xsd
+        http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+
+    <bean id="helloProducer" class="org.my.boot.handler.HelloHandler"/>
+    <bean id="camelCxfBinding" class="org.apache.camel.component.cxf.DefaultCxfBinding"/>
+    <bean id="simpleServerProcessor" class="org.my.boot.processor.SimpleServerProcessor"/>
+    <!--<bean id="usersController" class="org.my.boot.controller.UsersController"/>-->
+
+    <cxf:cxfEndpoint id="serviceEndpoint" address="/SoapContext"
+                     wsdlURL="classpath:service/hello_world.wsdl"
+                     serviceClass="org.my.enterprise.MyService"
+                     endpointName="s:MyService"
+                     serviceName="s:ServicePorts"
+                     xmlns:s="http://org/my/enterprise">
+        <cxf:dataBinding>
+            <bean class="org.apache.cxf.jaxb.JAXBDataBinding">
+                <constructor-arg>
+                    <bean factory-method="newInstance" class="javax.xml.bind.JAXBContext">
+                        <constructor-arg value="org.my.enterprise"/>
+                    </bean>
+                </constructor-arg>
+            </bean>
+        </cxf:dataBinding>
+    </cxf:cxfEndpoint>
+    <camel:camelContext id="root-camel-context">
+
+        <camel:route id="service_route">
+            <camel:from uri="cxf:bean:serviceEndpoint?cxfBinding=#camelCxfBinding&amp;synchronous=true"/>
+            <camel:log message="Message came ${body}"/>
+            <camel:process ref="simpleServerProcessor"/>
+        </camel:route>
+    </camel:camelContext>
+</beans>

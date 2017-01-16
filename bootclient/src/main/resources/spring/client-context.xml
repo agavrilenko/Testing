@@ -75,6 +75,7 @@
                     <camel:constant>http://org/my/enterprise</camel:constant>
                 </camel:setHeader>
                 <camel:setHeader headerName="operationName">
+<!---->
                     <camel:constant>processOperation</camel:constant>
                 </camel:setHeader>
                 <!--<camel:to uri="cxf://{{cxf.uri}}?defaultOperationName=processOperation&amp;serviceClass=org.my.enterprise.ServicePorts"/>-->

@@ -1,0 +1,4 @@
+https://www.tutorialspoint.com/wsdl/wsdl_example.htm
+https://access.redhat.com/documentation/en-US/Red_Hat_JBoss_Fuse/6.2/html/Apache_Camel_Development_Guide/FuseMREIP.html
+
+http://localhost:9090/rest/serv/users/do

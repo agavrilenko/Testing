@@ -172,6 +172,7 @@
         <module>hazelcast</module>
         <module>springboot</module>
         <module>bootclient</module>
+        <module>kafka</module>
     </modules>
 
 </project>

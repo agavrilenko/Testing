@@ -3,9 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <groupId>org.springframework.boot</groupId>
-        <version>1.4.1.RELEASE</version>
+        <artifactId>Testing</artifactId>
+        <groupId>org.my</groupId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -24,7 +24,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-parent</artifactId>
-                <version>1.4.1.RELEASE</version>
+                <version>${boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.camel</groupId>
@@ -116,7 +116,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>1.4.1.RELEASE</version>
+                <version>2.0.3.RELEASE</version>
                 <executions>
                     <execution>
                         <goals>
@@ -126,28 +126,28 @@
                 </executions>
             </plugin>
             <!--<plugin>-->
-                <!--<groupId>org.jvnet.jaxb2.maven2</groupId>-->
-                <!--<artifactId>maven-jaxb2-plugin</artifactId>-->
-                <!--<version>0.13.1</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<goals>-->
-                            <!--<goal>generate</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-<!---->
-                <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<verbose>true</verbose>-->
-                    <!--<cleanPackageDirectories>false</cleanPackageDirectories>-->
-                    <!--<readOnly>true</readOnly>-->
-                    <!--<extension>true</extension>-->
-                    <!--<forceRegenerate>true</forceRegenerate>-->
-                    <!--<schemaDirectory>${project.basedir}/src/main/resources/schema</schemaDirectory>-->
-                    <!--<generatePackage>org.my.boot</generatePackage>-->
-                    <!--<catalog>${project.build.directory}/generated-sources</catalog>-->
-                    <!--<bindings>${project.basedir}/src/main/resources/bindings/bindings.xjb</bindings>-->
-                <!--</configuration>-->
+            <!--<groupId>org.jvnet.jaxb2.maven2</groupId>-->
+            <!--<artifactId>maven-jaxb2-plugin</artifactId>-->
+            <!--<version>0.13.1</version>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<goals>-->
+            <!--<goal>generate</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!---->
+            <!--</executions>-->
+            <!--<configuration>-->
+            <!--<verbose>true</verbose>-->
+            <!--<cleanPackageDirectories>false</cleanPackageDirectories>-->
+            <!--<readOnly>true</readOnly>-->
+            <!--<extension>true</extension>-->
+            <!--<forceRegenerate>true</forceRegenerate>-->
+            <!--<schemaDirectory>${project.basedir}/src/main/resources/schema</schemaDirectory>-->
+            <!--<generatePackage>org.my.boot</generatePackage>-->
+            <!--<catalog>${project.build.directory}/generated-sources</catalog>-->
+            <!--<bindings>${project.basedir}/src/main/resources/bindings/bindings.xjb</bindings>-->
+            <!--</configuration>-->
             <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.cxf</groupId>
@@ -169,7 +169,8 @@
                                         <extraarg>-xjc-Xequals</extraarg>
                                     </extraargs>
                                     <bindingFiles>
-                                        <bindingFile>${project.basedir}/src/main/resources/bindings/bindings.xjb</bindingFile>
+                                        <bindingFile>${project.basedir}/src/main/resources/bindings/bindings.xjb
+                                        </bindingFile>
                                     </bindingFiles>
                                 </wsdlOption>
 

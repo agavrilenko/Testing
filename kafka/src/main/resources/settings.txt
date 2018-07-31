@@ -10,3 +10,5 @@ bin\windows\kafka-topics.bat --list --zookeeper localhost:2181
 bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic test
 #### start consumer ####
 bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic test --from-beginning
+#### modify #####
+ bin\windows\kafka-topics.bat --zookeeper localhost:2181 --alter --topic test --partitions 3

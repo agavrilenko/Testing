@@ -12,3 +12,7 @@ bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic test
 bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic test --from-beginning
 #### modify #####
  bin\windows\kafka-topics.bat --zookeeper localhost:2181 --alter --topic test --partitions 3
+######
+https://docs.spring.io/spring-kafka/reference/htmlsingle/#deps-for-11x
+https://docs.spring.io/spring-kafka/reference/htmlsingle/#_kafka_client_version
+https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-messaging.html#boot-features-kafka

@@ -29,7 +29,7 @@ public class SimpleProducer {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            producer.send(new ProducerRecord<String, String>("test",i%3, Integer.toString(i), Integer.toString(i)));
+            producer.send(new ProducerRecord<String, String>("test",i%10, Integer.toString(i), Integer.toString(i)));
         }
 
         producer.close();

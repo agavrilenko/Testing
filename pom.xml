@@ -221,6 +221,7 @@
         <module>springboot</module>
         <module>bootclient</module>
         <module>kafka</module>
+        <module>hackerrank</module>
     </modules>
 
 </project>

@@ -1,4 +1,4 @@
-package org.my.hrank.data_structures.array.left_rotation;
+package org.my.hrank.data_structures.arrays.left_rotation;
 
 import java.util.Scanner;
 

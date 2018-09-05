@@ -1,15 +1,12 @@
-package org.my.hrank.data_structures.array.left_rotation;
+package org.my.hrank.data_structures.arrays.left_rotation;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.RandomAccessFile;
 import java.net.URL;
 import java.util.Scanner;
-
-import static org.junit.Assert.*;
 
 public class LeftRotationSolutionTest {
 

@@ -1,36 +1,26 @@
 package org.my.hrank.data_structures.arrays.left_rotation;
 
-import org.junit.Assert;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.my.hrank.AbstractTest;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URL;
 import java.util.Scanner;
 
-public class LeftRotationSolutionTest {
+public class LeftRotationSolutionTest extends AbstractTest {
 
     @Test
-    public void test() throws FileNotFoundException {
+    public void testRotation() throws FileNotFoundException {
+        this.test();
+    }
 
-        String inFolder = "src/test/resources/" + this.getClass().getSimpleName() + "/in";
-        URL url = LeftRotationSolutionTest.class.getClassLoader().getResource(inFolder);
-        File[] ins = new File(inFolder).listFiles();
-//        File[] outs = new File(outFolder).listFiles();
-        if (ins == null) {
-            Assert.fail();
-        }
-        for (File inFile : ins) {
-            Scanner sc = new Scanner(inFile);
-            String firstLine = sc.nextLine();
-            String secondLine = sc.nextLine();
-            String actual = Solution.readAndSolve(firstLine, secondLine);
-            String outFile = inFile.getAbsolutePath().replace(File.separator + "in" + File.separator,
-                    File.separator + "out" + File.separator);
-            Scanner exp = new Scanner(new File(outFile));
-            String expected = exp.nextLine();
-            Assert.assertEquals(expected, actual);
-        }
+    public void testAndAssert(Scanner inScanner, Scanner outScanner, String absolutePath) {
+        String firstLine = inScanner.nextLine();
+        String secondLine = inScanner.nextLine();
+        String actual = Solution.readAndSolve(firstLine, secondLine);
+        String expected = outScanner.nextLine();
+//        collector.assertEquals(expected, actual);
+        collector.checkThat("Test failed for " + absolutePath, expected, IsEqual.equalTo(actual));
     }
 
 }

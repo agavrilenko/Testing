@@ -1,18 +1,11 @@
 package org.my.hrank.data_structures.arrays.sparse_arrays;
 
-import org.hamcrest.Matcher;
-import org.hamcrest.collection.IsArray;
-import org.hamcrest.collection.IsArrayContaining;
 import org.hamcrest.collection.IsArrayContainingInOrder;
-import org.hamcrest.core.IsEqual;
-import org.junit.Assert;
 import org.junit.Test;
 import org.my.hrank.AbstractTest;
 
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class SparseArraySolutionTest extends AbstractTest {
 
@@ -38,9 +31,9 @@ public class SparseArraySolutionTest extends AbstractTest {
         }
         int[] actuals = Solution.matchingStrings(strings, queries);
         Integer[] act = new Integer[actuals.length];
-        AtomicInteger ind = new AtomicInteger(0);
-        Arrays.stream(act).
-                forEach(i -> i = actuals[ind.getAndIncrement()]);
+        for (int i = 0; i < actuals.length; i++) {
+            act[i] = actuals[i];
+        }
         collector.checkThat("Test failed for " + absolutePath, act, IsArrayContainingInOrder.<Object>arrayContaining(exp));
     }
 }

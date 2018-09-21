@@ -63,8 +63,37 @@ public class Solution {
      */
     static boolean hasCycle(SinglyLinkedListNode head) {
 
+        SinglyLinkedListNode n = head;
+        SinglyLinkedListNode n1 = head;
+        boolean present = false;
+        while (n != null && n.next != null) {
+            n = n.next.next;
+            n1 = n1.next;
+            if (n == n1) {
+                present = true;
+                break;
+            }
+        }
+        return present;
+
+
+/*
+        HashSet<SinglyLinkedListNode> nodes = new HashSet<>();
+        SinglyLinkedListNode next = head;
+        if (next == null) {
+            return false;
+        }
+        while (next != null) {
+            if (nodes.contains(next)) {
+                return true;
+            }
+            nodes.add(next);
+            next = next.next;
+        }
 
         return false;
+*/
+
     }
 
     private static final Scanner scanner = new Scanner(System.in);

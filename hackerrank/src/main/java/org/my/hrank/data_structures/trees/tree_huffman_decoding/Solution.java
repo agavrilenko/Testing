@@ -1,6 +1,9 @@
 package org.my.hrank.data_structures.trees.tree_huffman_decoding;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Scanner;
 
 abstract class Node implements Comparable<Node> {
 
@@ -57,9 +60,29 @@ class Decoding {
     }
 
     public String dec(String s, Node root) {
+        StringBuffer result = new StringBuffer();
+        if (root == null || s == null || s.isEmpty()) {
+            return result.toString();
+        }
+        int idx = 0;
+        char[] enc = s.toCharArray();
+        while (idx < enc.length) {
+            Node next = root;
+            while (true) {
+                if (enc[idx] == '1') {
+                    next = next.right;
+                } else {
+                    next = next.left;
+                }
+                idx++;
+                if (next.left == null && next.right == null) {
+                    result.append(next.data);
+                    break;
+                }
+            }
+        }
 
-
-        return null;
+        return result.toString();
     }
 
 }
@@ -130,8 +153,9 @@ public class Solution {
         int[] charFreqs = new int[256];
 
         // read each character and record the frequencies
-        for (char c : test.toCharArray())
+        for (char c : test.toCharArray()) {
             charFreqs[c]++;
+        }
 
         // build tree
         Node tree = buildTree(charFreqs);

@@ -34,7 +34,7 @@ public abstract class AbstractTest {
 
             testAndAssert(inScanner, expData, inFile.getAbsolutePath());
         }
-//        collector.checkSucceeds()
+
     }
 
 }

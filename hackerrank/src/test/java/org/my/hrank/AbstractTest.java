@@ -2,6 +2,7 @@ package org.my.hrank;
 
 import org.junit.Assert;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.my.hrank.data_structures.arrays.left_rotation.LeftRotationSolutionTest;
 
@@ -17,10 +18,15 @@ public abstract class AbstractTest {
     @Rule
     public ErrorCollector collector = new ErrorCollector();
 
+    @Test
+    public void testSolution() throws FileNotFoundException {
+        this.test();
+    }
+
     public void test() throws FileNotFoundException {
 
         String inFolder = "src/test/resources/" + this.getClass().getSimpleName() + "/in";
-        URL url = LeftRotationSolutionTest.class.getClassLoader().getResource(inFolder);
+        URL url = AbstractTest.class.getClassLoader().getResource(inFolder);
         File[] ins = new File(inFolder).listFiles();
 //        File[] outs = new File(outFolder).listFiles();
         if (ins == null) {

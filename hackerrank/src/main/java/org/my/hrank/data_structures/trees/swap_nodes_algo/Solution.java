@@ -1,7 +1,10 @@
 package org.my.hrank.data_structures.trees.swap_nodes_algo;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Solution {
 
@@ -41,7 +44,7 @@ public class Solution {
     }
 
     private static void printNodes(Node root, LinkedList<Integer> print) {
-        if (root == null) {
+        if (root == null || root.data == -1) {
             return;
         }
         if (root.left.data != -1) {
@@ -81,8 +84,12 @@ public class Solution {
         root.right = new Node(indexes[idx++][1]);
 
         while (idx < indexes.length) {
-            buildSubTree(indexes, root.left);
-            buildSubTree(indexes, root.right);
+            if (root.left.data != -1) {
+                buildSubTree(indexes, root.left);
+            }
+            if (root.right.data != -1) {
+                buildSubTree(indexes, root.right);
+            }
         }
         return root;
     }

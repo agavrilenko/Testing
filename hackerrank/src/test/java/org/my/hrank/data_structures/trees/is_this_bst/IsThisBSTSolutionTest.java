@@ -3,8 +3,7 @@ package org.my.hrank.data_structures.trees.is_this_bst;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-import static org.my.hrank.data_structures.trees.is_this_bst.Solution.*;
+import static org.my.hrank.data_structures.trees.is_this_bst.Solution.Node;
 
 public class IsThisBSTSolutionTest {
     @Test
@@ -72,7 +71,8 @@ public class IsThisBSTSolutionTest {
 
         Assert.assertFalse(Solution.checkBST(root));
     }
-@Test
+
+    @Test
     public void testBST_False_5() {
 
         Node root = new Node(1);
@@ -81,6 +81,23 @@ public class IsThisBSTSolutionTest {
         right.left = new Node(2);
         right.right = new Node(10);
         right.right.right = new Node(11);
+
+        Assert.assertFalse(Solution.checkBST(root));
+    }
+
+    @Test
+    public void testBST_False_6() {
+
+        Node root = new Node(10);
+        Node left = new Node(5);
+        root.left = left;
+        left.left = new Node(4);
+        left.right = new Node(7);
+        left.right.left = new Node(6);
+        left.right.right = new Node(8);
+        left.right.right.left = new Node(2);
+        left.right.right.left.right = new Node(3);
+        left.right.right.left.left = new Node(1);
 
         Assert.assertFalse(Solution.checkBST(root));
     }

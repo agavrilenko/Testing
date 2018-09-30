@@ -36,23 +36,32 @@ public class Solution {
             max = max > maxLeft ? max : maxLeft;
         }
         if (root.right != null) {
-            int minRight = min(root.right);
-            if (minRight == -1 || root.data >= minRight) {
+            int maxRight = max(root.right);
+            if (maxRight == -1) {
                 return -1;
             }
-            max = max > minRight ? max : minRight;
+            max = max > maxRight ? max : maxRight;
+            int minRight = min(root.right);
+            if (minRight == -1 || minRight <= root.data) {
+                return -1;
+            }
         }
+
         return max;
     }
 
     static int min(Node root) {
         int min = root.data;
         if (root.left != null) {
-            int maxLeft = max(root.left);
-            if (maxLeft == -1 || root.data <= maxLeft) {
+            int minLeft = min(root.left);
+            if (minLeft == -1) {
                 return -1;
             }
-            min = min < maxLeft ? min : maxLeft;
+            min = min < minLeft ? min : minLeft;
+            int maxLeft = max(root.left);
+            if (maxLeft == -1 || maxLeft >= root.data) {
+                return -1;
+            }
         }
         if (root.right != null) {
             int minRight = min(root.right);

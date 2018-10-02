@@ -9,10 +9,7 @@ import java.util.Scanner;
 
 public class LeftRotationSolutionTest extends AbstractTest {
 
-    @Test
-    public void testRotation() throws FileNotFoundException {
-        this.test();
-    }
+
 
     public void testAndAssert(Scanner inScanner, Scanner outScanner, String absolutePath) {
         String firstLine = inScanner.nextLine();

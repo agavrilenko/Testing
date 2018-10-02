@@ -85,7 +85,7 @@ public class Solution {
 
         @Override
         public String toString() {
-            return "Node{" +
+            return "AbstractNode{" +
                     "data=" + data +
                     '}';
         }

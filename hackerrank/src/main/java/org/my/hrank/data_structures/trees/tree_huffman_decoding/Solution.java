@@ -45,10 +45,10 @@ class HuffmanNode extends Node {
 class Decoding {
 
 /*
-	class Node
+	class AbstractNode
 		public  int frequency; // the frequency of this tree
     	public  char data;
-    	public  Node left, right;
+    	public  AbstractNode left, right;
 
 */
 

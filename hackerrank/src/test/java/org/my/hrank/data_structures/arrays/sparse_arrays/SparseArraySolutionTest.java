@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class SparseArraySolutionTest extends AbstractTest {
 
     @Test
-    public void testStringParsing() throws FileNotFoundException {
+    public void testStringParsing() throws Exception {
         this.test();
 
     }

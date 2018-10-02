@@ -16,7 +16,7 @@ class Node {
 
     @Override
     public String toString() {
-        return "Node{" +
+        return "AbstractNode{" +
                 "data=" + data +
                 '}';
     }
@@ -24,10 +24,10 @@ class Node {
 
 class Solution {
     /*
-class Node
+class AbstractNode
     int data;
-    Node left;
-    Node right;
+    AbstractNode left;
+    AbstractNode right;
 */
     public static Node lca(Node root, int v1, int v2) {
 

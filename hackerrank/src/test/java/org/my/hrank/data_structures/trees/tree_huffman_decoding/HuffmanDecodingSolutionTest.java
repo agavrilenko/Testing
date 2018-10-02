@@ -17,11 +17,6 @@ public class HuffmanDecodingSolutionTest extends AbstractTest {
 
     private Map<Character, String> mapA = new HashMap<Character, String>();
 
-    @Test
-    public void testStringParsing() throws FileNotFoundException {
-        this.test();
-
-    }
 
     @Override
     public void testAndAssert(Scanner inScanner, Scanner outScanner, String absolutePath) {

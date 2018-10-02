@@ -87,7 +87,7 @@ public class Solution {
 
         @Override
         public String toString() {
-            return "Node{" +
+            return "AbstractNode{" +
                     "c=" + c +
                     ", cnt=" + cnt +
                     ", children=" + Arrays.toString(children) +

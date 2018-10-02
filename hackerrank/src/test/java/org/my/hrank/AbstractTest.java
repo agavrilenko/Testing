@@ -13,17 +13,17 @@ import java.util.Scanner;
 
 public abstract class AbstractTest {
 
-    public abstract void testAndAssert(Scanner inScanner, Scanner outScanner, String absolutePath);
+    public abstract void testAndAssert(Scanner inScanner, Scanner outScanner, String absolutePath) throws Exception;
 
     @Rule
     public ErrorCollector collector = new ErrorCollector();
 
     @Test
-    public void testSolution() throws FileNotFoundException {
+    public void testSolution() throws Exception {
         this.test();
     }
 
-    public void test() throws FileNotFoundException {
+    public void test() throws Exception {
 
         String inFolder = "src/test/resources/" + this.getClass().getSimpleName() + "/in";
         URL url = AbstractTest.class.getClassLoader().getResource(inFolder);

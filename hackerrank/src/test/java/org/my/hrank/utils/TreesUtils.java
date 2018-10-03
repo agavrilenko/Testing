@@ -8,8 +8,11 @@ public class TreesUtils {
 
     public static Integer[] traverseTree(AbstractNode root) {
         LinkedList<Integer> print = new LinkedList<>();
-        printNodes(root.getLeft(), print);
+        if (root == null) {
+            return new Integer[]{-1};
+        }
         print.add(root.getData());
+        printNodes(root.getLeft(), print);
         printNodes(root.getRight(), print);
         return print.toArray(new Integer[0]);
     }
@@ -18,18 +21,17 @@ public class TreesUtils {
         if (root == null || root.getData() == -1) {
             return;
         }
+        print.add(root.getData());
         if (root.getLeft().getData() != -1) {
             printNodes(root.getLeft(), print);
         }
-        print.add(root.getData());
         if (root.getRight().getData() != -1) {
             printNodes(root.getRight(), print);
         }
     }
 
-    public static <T extends AbstractNode> AbstractNode buildTree(int[][] indexes, Class<T> type) throws IllegalAccessException, InstantiationException {
-        AbstractNode root = type.newInstance();
-        root.setData(1);
+    public static <T extends AbstractNode> AbstractNode buildTree(int[][] indexes, Class<T> type, AbstractNode root) throws IllegalAccessException, InstantiationException {
+
         AbstractNode left = type.newInstance();
         AtomicInteger idx = new AtomicInteger(0);
         left.setData(indexes[idx.get()][0]);

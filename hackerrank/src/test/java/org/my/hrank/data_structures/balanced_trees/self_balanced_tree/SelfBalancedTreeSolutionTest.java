@@ -12,6 +12,7 @@ public class SelfBalancedTreeSolutionTest extends AbstractTest {
 
     @Override
     public void testAndAssert(Scanner inScanner, Scanner outScanner, String absolutePath) throws InstantiationException, IllegalAccessException {
+        int rootData = Integer.parseInt(inScanner.nextLine().trim());
         int n = Integer.parseInt(inScanner.nextLine().trim());
 
         int[][] indexes = new int[n][2];
@@ -24,18 +25,20 @@ public class SelfBalancedTreeSolutionTest extends AbstractTest {
                 indexes[indexesRowItr][indexesColumnItr] = indexesItem;
             }
         }
-        Solution.Node root = (Solution.Node) TreesUtils.buildTree(indexes, Solution.Node.class);
+        Solution.Node root = new Solution.Node();
+        root.setData(rootData);
+        Solution.Node node = (Solution.Node) TreesUtils.buildTree(indexes, Solution.Node.class, root);
         int val = inScanner.nextInt();
 
 
-        Solution.Node actualNode = Solution.insert(root, val);
-        Integer[] actual = TreesUtils.traverseTree(actualNode);
+//        Solution.Node newTree = Solution.insert(node, val);
+        Integer[] actual = TreesUtils.traverseTree(node);
 
         Integer[] expected = new Integer[n];
 
+        String line = outScanner.nextLine();
+        String[] dataSt = line.split(" ");
         for (int i = 0; i < expected.length; i++) {
-            String line = outScanner.nextLine();
-            String[] dataSt = line.split(" ");
             expected[i] = Integer.valueOf(dataSt[i]);
         }
 

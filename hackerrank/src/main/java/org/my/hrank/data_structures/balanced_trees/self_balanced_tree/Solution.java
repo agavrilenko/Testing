@@ -12,11 +12,19 @@ public class Solution {
         return null;
     }
 
-    class Node implements AbstractNode {
+    public static class Node implements AbstractNode {
         int val;    //Value
         int ht;        //Height
         Node left;    //Left child
         Node right;    //Right child
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "val=" + val +
+                    ", ht=" + ht +
+                    '}';
+        }
 
         public Node() {
         }

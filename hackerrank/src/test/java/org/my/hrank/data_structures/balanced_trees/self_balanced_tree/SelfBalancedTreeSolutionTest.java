@@ -31,8 +31,8 @@ public class SelfBalancedTreeSolutionTest extends AbstractTest {
         int val = inScanner.nextInt();
 
 
-//        Solution.Node newTree = Solution.insert(node, val);
-        Integer[] actual = TreesUtils.traverseTree(node);
+        Solution.Node newTree = Solution.insert(node, val);
+        Integer[] actual = TreesUtils.traverseTree(newTree);
 
         Integer[] expected = new Integer[n];
 
@@ -41,9 +41,6 @@ public class SelfBalancedTreeSolutionTest extends AbstractTest {
         for (int i = 0; i < expected.length; i++) {
             expected[i] = Integer.valueOf(dataSt[i]);
         }
-
         collector.checkThat("Test failed for " + absolutePath, actual, IsArrayContainingInOrder.<Object>arrayContaining(expected));
-
-
     }
 }

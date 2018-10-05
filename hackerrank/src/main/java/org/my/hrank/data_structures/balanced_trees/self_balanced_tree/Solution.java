@@ -15,7 +15,11 @@ public class Solution {
         Node needToBalance = recalculateBalance(root);
         //balance if needed
         if (needToBalance != null) {
-            balance(needToBalance);
+            if (needToBalance == root) {
+                balance(root);
+            } else {
+                balance(needToBalance);
+            }
         }
         return root;
     }
@@ -27,10 +31,10 @@ public class Solution {
         }
         int leftHt = 0;
         int rightHt = 0;
-        if (root.left != null) {
+        if (root.left != null && root.left.val != -1) {
             leftHt = calculateHeight(root.left) + 1;
         }
-        if (root.right != null) {
+        if (root.right != null && root.right.val != -1) {
             rightHt = calculateHeight(root.right) + 1;
         }
         root.ht = leftHt > rightHt ? leftHt : rightHt;
@@ -51,7 +55,7 @@ public class Solution {
                 leftRight = needToBalance.left.right;
                 needToBalance.left = leftRight;
                 left.right = leftRight.left;
-                leftRight.left = left;
+                leftRight.left = left; //need to add new Node(-1) when it is leaf
             }
             //left left case
             left = needToBalance.left;
@@ -117,12 +121,12 @@ public class Solution {
     private static int getBalanceFactor(Node root) {
         int leftHt = 0;
         int rightHt = 0;
-        if (root.left != null) {
-            leftHt = root.left.ht;
+        if (root.left != null && root.left.val != -1) {
+            leftHt = root.left.ht + 1;
         }
 
-        if (root.right != null) {
-            rightHt = root.right.ht;
+        if (root.right != null && root.right.val != -1) {
+            rightHt = root.right.ht + 1;
         }
 
         return rightHt - leftHt;
@@ -130,36 +134,44 @@ public class Solution {
 
     private static int insertNode(Node root, int val) {
         if (root == null) {
-            root = new Node();
-            root.val = val;
-            root.ht = 0;
+            root = newLeafNode(val);
             return root.ht;
         }
         int leftHt = 0;
         int rightHt = 0;
         if (root.val < val) {
-            if (root.right != null) {
+            if (root.right != null && root.right.val != -1) {
                 rightHt = insertNode(root.right, val) + 1;
             } else {
-                root.right = new Node();
-                root.right.val = val;
-                root.right.ht = 0;
+                root.right = newLeafNode(val);
                 rightHt = 1;
             }
         }
         if (root.val > val) {
-            if (root.left != null) {
+            if (root.left != null && root.left.val != -1) {
                 leftHt = insertNode(root.left, val) + 1;
             } else {
-                root.left = new Node();
-                root.left.val = val;
-                root.left.ht = 0;
+                root.left = newLeafNode(val);
                 leftHt = 1;
-
             }
         }
         root.ht = leftHt > rightHt ? leftHt : rightHt;
         return root.ht;
+    }
+
+    private static Node newNode(int val) {
+        Node node = new Node();
+        node.val = val;
+        return node;
+    }
+
+    private static Node newLeafNode(int val) {
+        Node node = new Node();
+        node.val = val;
+        node.ht = 0;
+        node.left = newNode(-1);
+        node.right = newNode(-1);
+        return node;
     }
 
 

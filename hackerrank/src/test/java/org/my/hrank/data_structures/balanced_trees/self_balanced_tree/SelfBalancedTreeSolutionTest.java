@@ -38,7 +38,7 @@ public class SelfBalancedTreeSolutionTest extends AbstractTest {
 
         String line = outScanner.nextLine();
         String[] dataSt = line.split(" ");
-        for (int i = 0; i < expected.length; i++) {
+        for (int i = 0; i < dataSt.length; i++) {
             expected[i] = Integer.valueOf(dataSt[i]);
         }
         collector.checkThat("Test failed for " + absolutePath, actual, IsArrayContainingInOrder.<Object>arrayContaining(expected));

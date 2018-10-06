@@ -4,7 +4,7 @@ import org.my.hrank.utils.AbstractNode;
 
 public class Solution {
 
-    public static Node insert(Node root, int val) {
+    static Node insert(Node root, int val) {
 
         //calculate height
         calculateHeight(root);
@@ -12,15 +12,20 @@ public class Solution {
         insertNode(root, val);
         //recalculate balance factor
         //check case when needToBalance is root itself
-        Node needToBalance = recalculateBalance(root);
+
+        Node needToBalance = getPenultimatUnbalancedNode(root);
         //balance if needed
         if (needToBalance != null) {
-            if (needToBalance == root) {
-                balance(root);
+            if (abs(getBalanceFactor(needToBalance.right)) > 1) {
+                needToBalance.right = balance(needToBalance.right);
+            } else if (abs(getBalanceFactor(needToBalance.left)) > 1) {
+                needToBalance.left = balance(needToBalance.left);
             } else {
-                balance(needToBalance);
+                root = balance(root);
             }
+
         }
+        calculateHeight(root);
         return root;
     }
 
@@ -94,13 +99,25 @@ public class Solution {
      * @param root
      * @return
      */
-    private static Node recalculateBalance(Node root) {
+    private static Node getPenultimatUnbalancedNode(Node root) {
 
         int currentFactor = getBalanceFactor(root);
         if (currentFactor > 1) {
             int rightFactor = getBalanceFactor(root.right);
-            if (rightFactor > 1) {
-                return recalculateBalance(root.right);
+            if (abs(rightFactor) > 1) {
+                int leftF = 0;
+                int rightF = 0;
+                if (root.right.left != null) {
+                    leftF = getBalanceFactor(root.right.left);
+                }
+                if (root.right.right != null) {
+                    rightF = getBalanceFactor(root.right.right);
+                }
+                //right is last unbalanced with |factor|>1. needs to return root to have link
+                if (abs(leftF) <= 1 && abs(rightF) <= 1) {
+                    return root;
+                }
+                return getPenultimatUnbalancedNode(root.right);
 
             } else {
                 return root;
@@ -108,14 +125,31 @@ public class Solution {
         }
         if (currentFactor < -1) {
             int leftFactor = getBalanceFactor(root.left);
-            if (leftFactor < -1) {
-                return recalculateBalance(root.left);
+            if (abs(leftFactor) > 1) {
+                int leftF = 0;
+                int rightF = 0;
+                if (root.left.left != null) {
+                    leftF = getBalanceFactor(root.left.left);
+                }
+                if (root.left.right != null) {
+                    rightF = getBalanceFactor(root.left.right);
+                }
+                //right is last unbalanced with |factor|>1. needs to return root to have link
+                if (abs(leftF) <= 1 && abs(rightF) <= 1) {
+                    return root;
+                }
+
+                return getPenultimatUnbalancedNode(root.left);
             } else {
                 return root;
             }
         }
 
         return null;
+    }
+
+    private static int abs(int value) {
+        return value > 0 ? value : -1 * value;
     }
 
     private static int getBalanceFactor(Node root) {
@@ -159,7 +193,7 @@ public class Solution {
         return root.ht;
     }
 
-    private static Node newNode(int val) {
+    private static Node newNodeInstance(int val) {
         Node node = new Node();
         node.val = val;
         return node;
@@ -169,8 +203,8 @@ public class Solution {
         Node node = new Node();
         node.val = val;
         node.ht = 0;
-        node.left = newNode(-1);
-        node.right = newNode(-1);
+//        node.left = newNodeInstance(-1);
+//        node.right = newNodeInstance(-1);
         return node;
     }
 

@@ -4,7 +4,6 @@ import org.hamcrest.collection.IsArrayContainingInOrder;
 import org.my.hrank.AbstractTest;
 import org.my.hrank.utils.TreesUtils;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class SelfBalancedTreeSolutionTest extends AbstractTest {
@@ -34,10 +33,10 @@ public class SelfBalancedTreeSolutionTest extends AbstractTest {
         Solution.Node newTree = Solution.insert(node, val);
         Integer[] actual = TreesUtils.traverseTree(newTree);
 
-        Integer[] expected = new Integer[n];
 
         String line = outScanner.nextLine();
         String[] dataSt = line.split(" ");
+        Integer[] expected = new Integer[dataSt.length];
         for (int i = 0; i < dataSt.length; i++) {
             expected[i] = Integer.valueOf(dataSt[i]);
         }

@@ -22,11 +22,13 @@ public class TreesUtils {
             return;
         }
         print.add(root.getData());
-        if (root.getLeft().getData() != -1) {
-            printNodes(root.getLeft(), print);
+        AbstractNode left = root.getLeft();
+        if (left != null && left.getData() != -1) {
+            printNodes(left, print);
         }
-        if (root.getRight().getData() != -1) {
-            printNodes(root.getRight(), print);
+        AbstractNode right = root.getRight();
+        if (right != null && right.getData() != -1) {
+            printNodes(right, print);
         }
     }
 
@@ -41,11 +43,13 @@ public class TreesUtils {
         root.setRight(right);
 
         while (idx.get() < indexes.length) {
-            if (root.getLeft().getData() != -1) {
-                buildSubTree(indexes, root.getLeft(), idx, type);
+            AbstractNode rootLeft = root.getLeft();
+            if (rootLeft != null && rootLeft.getData() != -1) {
+                buildSubTree(indexes, rootLeft, idx, type);
             }
-            if (root.getRight().getData() != -1) {
-                buildSubTree(indexes, root.getRight(), idx, type);
+            AbstractNode rootRight = root.getRight();
+            if (rootRight != null && rootRight.getData() != -1) {
+                buildSubTree(indexes, rootRight, idx, type);
             }
         }
         return root;

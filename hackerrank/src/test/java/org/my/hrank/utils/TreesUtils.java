@@ -32,48 +32,60 @@ public class TreesUtils {
         }
     }
 
-    public static <T extends AbstractNode> AbstractNode buildTree(int[][] indexes, Class<T> type, AbstractNode root) throws IllegalAccessException, InstantiationException {
+    public static <T extends AbstractNode> AbstractNode buildTree(Integer[][] indexes, Class<T> type, AbstractNode root) throws IllegalAccessException, InstantiationException {
 
-        AbstractNode left = type.newInstance();
         AtomicInteger idx = new AtomicInteger(0);
-        left.setData(indexes[idx.get()][0]);
-        root.setLeft(left);
-        AbstractNode right = type.newInstance();
-        right.setData(indexes[idx.getAndIncrement()][1]);
-        root.setRight(right);
+        Integer data = indexes[idx.get()][0];
+        if (data != null) {
+            AbstractNode left = type.newInstance();
+            left.setData(data);
+            root.setLeft(left);
+        }
+        Integer data1 = indexes[idx.getAndIncrement()][1];
+        if (data1 != null) {
+            AbstractNode right = type.newInstance();
+            right.setData(data1);
+            root.setRight(right);
+        }
 
         while (idx.get() < indexes.length) {
             AbstractNode rootLeft = root.getLeft();
-            if (rootLeft != null && rootLeft.getData() != -1) {
+            if (rootLeft != null) {
                 buildSubTree(indexes, rootLeft, idx, type);
             }
             AbstractNode rootRight = root.getRight();
-            if (rootRight != null && rootRight.getData() != -1) {
+            if (rootRight != null) {
                 buildSubTree(indexes, rootRight, idx, type);
             }
         }
         return root;
     }
 
-    private static <T extends AbstractNode> void buildSubTree(int[][] indexes, AbstractNode root, AtomicInteger idx, Class<T> type) throws IllegalAccessException, InstantiationException {
+    private static <T extends AbstractNode> void buildSubTree(Integer[][] indexes, AbstractNode root, AtomicInteger idx, Class<T> type) throws IllegalAccessException, InstantiationException {
 
         if (idx.get() == indexes.length) {
             return;
         }
         if (root.getLeft() == null && root.getRight() == null) {
-            AbstractNode left = type.newInstance();
-            left.setData(indexes[idx.get()][0]);
-            root.setLeft(left);
-            AbstractNode right = type.newInstance();
-            right.setData(indexes[idx.get()][1]);
-            root.setRight(right);
+            Integer data = indexes[idx.get()][0];
+            if (data != null) {
+                AbstractNode left = type.newInstance();
+                left.setData(data);
+                root.setLeft(left);
+            }
+            Integer data1 = indexes[idx.get()][1];
+            if (data1 != null) {
+                AbstractNode right = type.newInstance();
+                right.setData(data1);
+                root.setRight(right);
+            }
             idx.incrementAndGet();
             return;
         }
-        if (root.getLeft() != null && root.getLeft().getData() != -1) {
+        if (root.getLeft() != null) {
             buildSubTree(indexes, root.getLeft(), idx, type);
         }
-        if (root.getRight() != null && root.getRight().getData() != -1) {
+        if (root.getRight() != null) {
             buildSubTree(indexes, root.getRight(), idx, type);
         }
     }

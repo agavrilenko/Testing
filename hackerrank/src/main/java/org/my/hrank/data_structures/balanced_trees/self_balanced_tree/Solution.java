@@ -36,10 +36,10 @@ public class Solution {
         }
         int leftHt = 0;
         int rightHt = 0;
-        if (root.left != null && root.left.val != -1) {
+        if (root.left != null) {
             leftHt = calculateHeight(root.left) + 1;
         }
-        if (root.right != null && root.right.val != -1) {
+        if (root.right != null) {
             rightHt = calculateHeight(root.right) + 1;
         }
         root.ht = leftHt > rightHt ? leftHt : rightHt;
@@ -102,7 +102,7 @@ public class Solution {
     private static Node getPenultimatUnbalancedNode(Node root) {
 
         int currentFactor = getBalanceFactor(root);
-        if (currentFactor > 1) {
+        if (currentFactor > 0) {
             int rightFactor = getBalanceFactor(root.right);
             if (abs(rightFactor) > 1) {
                 int leftF = 0;
@@ -123,7 +123,7 @@ public class Solution {
                 return root;
             }
         }
-        if (currentFactor < -1) {
+        if (currentFactor < 0) {
             int leftFactor = getBalanceFactor(root.left);
             if (abs(leftFactor) > 1) {
                 int leftF = 0;
@@ -155,11 +155,11 @@ public class Solution {
     private static int getBalanceFactor(Node root) {
         int leftHt = 0;
         int rightHt = 0;
-        if (root.left != null && root.left.val != -1) {
+        if (root != null && root.left != null) {
             leftHt = root.left.ht + 1;
         }
 
-        if (root.right != null && root.right.val != -1) {
+        if (root != null && root.right != null) {
             rightHt = root.right.ht + 1;
         }
 
@@ -210,7 +210,7 @@ public class Solution {
 
 
     public static class Node implements AbstractNode {
-        int val;    //Value
+        Integer val;    //Value
         int ht;        //Height
         Node left;    //Left child
         Node right;    //Right child
@@ -228,11 +228,11 @@ public class Solution {
 
         ;
 
-        public int getData() {
+        public Integer getData() {
             return val;
         }
 
-        public void setData(int val) {
+        public void setData(Integer val) {
             this.val = val;
         }
 

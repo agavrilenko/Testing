@@ -9,7 +9,7 @@ public interface AbstractNode {
 
     <T extends AbstractNode> void setRight(T right);
 
-    int getData();
+    Integer getData();
 
-    void setData(int data);
+    void setData(Integer data);
 }

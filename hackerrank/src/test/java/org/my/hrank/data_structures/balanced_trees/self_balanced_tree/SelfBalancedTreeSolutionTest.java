@@ -14,13 +14,18 @@ public class SelfBalancedTreeSolutionTest extends AbstractTest {
         int rootData = Integer.parseInt(inScanner.nextLine().trim());
         int n = Integer.parseInt(inScanner.nextLine().trim());
 
-        int[][] indexes = new int[n][2];
-
+        Integer[][] indexes = new Integer[n][2];
+        // n is null
         for (int indexesRowItr = 0; indexesRowItr < n; indexesRowItr++) {
             String[] indexesRowItems = inScanner.nextLine().split(" ");
 
             for (int indexesColumnItr = 0; indexesColumnItr < 2; indexesColumnItr++) {
-                int indexesItem = Integer.parseInt(indexesRowItems[indexesColumnItr].trim());
+                Integer indexesItem;
+                try {
+                    indexesItem = Integer.parseInt(indexesRowItems[indexesColumnItr].trim());
+                } catch (NumberFormatException e) {
+                    indexesItem = null;
+                }
                 indexes[indexesRowItr][indexesColumnItr] = indexesItem;
             }
         }

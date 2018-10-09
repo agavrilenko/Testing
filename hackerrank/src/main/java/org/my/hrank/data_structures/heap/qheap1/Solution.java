@@ -26,7 +26,7 @@ public class Solution {
     public static class Heap {
         static private int ROOT = 0;
         private int[] values = new int[64];
-        private int maxInd = 0;
+        private int maxInd = -1;
 
         int printMin() {
             return values[0];
@@ -36,34 +36,54 @@ public class Solution {
             if (values.length == 0) {
                 return;
             }
-            int ind = -1;
+            int delIdx = -1;
             for (int i = 0; i < values.length; i++) {
                 if (values[i] == val) {
-                    ind = i;
+                    delIdx = i;
+                    break;
                 }
             }
-            if (ind == -1) {
+            if (delIdx == -1) {
                 return;
             }
 
-            values[ind] = values[maxInd];
+            values[delIdx] = values[maxInd];
             values[maxInd] = 0;
             maxInd--;
-            int root = (ind - 1) / 2;
-            if (values[ind] < values[root]) {
-                heapify(ind);
+            int root = (delIdx - 1) / 2;
+            if (values[delIdx] < values[root]) {
+                heapify(delIdx);
             } else {
-                int leftInd = 2 * ind;
-                int rightInd = 2 * ind + 1;
-//todo continue
+                sinkDown(delIdx);
+            }
+        }
+
+        private void sinkDown(int delIdx) {
+            int leftInd = 2 * delIdx + 1;
+            int rightInd = 2 * delIdx + 2;
+            if (rightInd > maxInd && leftInd > maxInd) {
+                return;
             }
 
-
+            int min = -1;
+            if (leftInd <= maxInd && rightInd <= maxInd) {
+                min = values[leftInd] > values[rightInd] ? rightInd : leftInd;
+            }
+            if (rightInd > maxInd && leftInd < maxInd) {
+                min = leftInd;
+            }
+            if (min != -1 && values[delIdx] > values[min]) {
+                int tmp = values[delIdx];
+                values[delIdx] = values[min];
+                values[min] = tmp;
+                sinkDown(min);
+            }
         }
 
         void insert(int value) {
-            if (maxInd == 0) {
+            if (maxInd == -1) {
                 values[0] = value;
+                maxInd++;
                 return;
             }
             if (values.length == maxInd + 1) {

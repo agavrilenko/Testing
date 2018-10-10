@@ -5,19 +5,19 @@ import java.util.Scanner;
 public class Solution {
     public static void main(String[] args) {
         Scanner inScanner = new Scanner(System.in);
-        int numberOfOps = inScanner.nextInt();
+        int numberOfOps = Integer.valueOf(inScanner.nextLine());
         Solution.Heap heap = new Solution.Heap();
         String operations;
         for (int i = 0; i < numberOfOps; i++) {
             operations = inScanner.nextLine();
             String[] ops = operations.split(" ");
-            if (ops[0] == "3") {
+            if (ops[0].equals("3")) {
                 System.out.println(heap.printMin());
             }
-            if (ops[0] == "2") {
+            if (ops[0].equals("2")) {
                 heap.delete(Integer.valueOf(ops[1]));
             }
-            if (ops[0] == "1") {
+            if (ops[0].equals("1")) {
                 heap.insert(Integer.valueOf(ops[1]));
             }
         }
@@ -46,6 +46,10 @@ public class Solution {
             if (delIdx == -1) {
                 return;
             }
+            if (delIdx == maxInd) {
+                values[maxInd--] = 0;
+                return;
+            }
 
             values[delIdx] = values[maxInd];
             values[maxInd] = 0;
@@ -69,7 +73,7 @@ public class Solution {
             if (leftInd <= maxInd && rightInd <= maxInd) {
                 min = values[leftInd] > values[rightInd] ? rightInd : leftInd;
             }
-            if (rightInd > maxInd && leftInd < maxInd) {
+            if (rightInd > maxInd && leftInd <= maxInd) {
                 min = leftInd;
             }
             if (min != -1 && values[delIdx] > values[min]) {

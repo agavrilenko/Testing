@@ -13,7 +13,12 @@ import java.util.Scanner;
 
 public abstract class AbstractTest {
 
+
     public abstract void testAndAssert(Scanner inScanner, Scanner outScanner, String absolutePath) throws Exception;
+
+    public String getMessage(String absolutePath) {
+        return "Test failed for " + absolutePath;
+    }
 
     @Rule
     public ErrorCollector collector = new ErrorCollector();
@@ -37,7 +42,6 @@ public abstract class AbstractTest {
                     File.separator + "out" + File.separator);
             Scanner inScanner = new Scanner(inFile);
             Scanner expData = new Scanner(new File(outFile));
-
             testAndAssert(inScanner, expData, inFile.getAbsolutePath());
         }
 

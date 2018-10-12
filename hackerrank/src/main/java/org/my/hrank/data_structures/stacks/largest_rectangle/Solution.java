@@ -3,14 +3,36 @@ package org.my.hrank.data_structures.stacks.largest_rectangle;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Solution {
 
     // Complete the largestRectangle function below.
     static long largestRectangle(int[] h) {
+        LinkedList<House> stack = new LinkedList<>();
+
+
 
         return 0;
+    }
+
+    public static class House {
+        int height;
+        int position;
+
+        public House(int height, int position) {
+            this.height = height;
+            this.position = position;
+        }
+
+        @Override
+        public String toString() {
+            return "House{" +
+                    "height=" + height +
+                    ", position=" + position +
+                    '}';
+        }
     }
 
     private static final Scanner scanner = new Scanner(System.in);

@@ -11,10 +11,61 @@ public class Solution {
     // Complete the largestRectangle function below.
     static long largestRectangle(int[] h) {
         LinkedList<House> stack = new LinkedList<>();
+        House cur = new House(h[0], 0);
+        stack.addFirst(cur);
+        long s = cur.height;
+        House lastViewed = cur;
+        long tmp = 0;
+        for (int i = 1; i < h.length; i++) {
+            cur = new House(h[i], i);
+            House lastHigh = stack.peekFirst();
+            //going up
+            if (lastViewed.height < cur.height) {
+                stack.addFirst(cur);
+            }
+            //doesn't grow
+            if (lastViewed.height == cur.height) {
+                lastViewed = cur;
+                continue;
+            }
+            //goes down
+            //square should be recalculated when we go down or last element
+            if (lastViewed.height > cur.height) {
+                lastHigh = stack.pollFirst();
 
+                tmp = lastHigh.height * (cur.position - 1 - lastHigh.position + 1);
+                s = tmp > s ? tmp : s;
 
+                //replace highest with equal to current. use highest as most left house
+                if (cur.height > stack.peekFirst().height) {
+                    stack.addFirst(new House(cur.height, lastHigh.position));
+                }
+                //
+                if (cur.height == stack.peekFirst().height) {
+                    //do nothing
+                }
+                if (cur.height < stack.peekFirst().height) {
+                    lastHigh = stack.pollFirst();
+                    tmp = lastHigh.height * (cur.position - 1 - lastHigh.position + 1);
+                    s = tmp > s ? tmp : s;
 
-        return 0;
+                }
+
+            }
+            //case when last element is highest
+            if (cur.position == h.length - 1) {
+                while (!stack.isEmpty()) {
+                    lastHigh = stack.pollFirst();
+                    tmp = lastHigh.height * (cur.position - lastHigh.position + 1);
+                    s = tmp > s ? tmp : s;
+                }
+            }
+
+            lastViewed = cur;
+
+        }
+
+        return s;
     }
 
     public static class House {

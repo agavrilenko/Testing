@@ -26,7 +26,6 @@ public class Solution {
             //doesn't grow
             if (lastViewed.height == cur.height) {
                 lastViewed = cur;
-                continue;
             }
             //goes down
             //square should be recalculated when we go down or last element
@@ -36,19 +35,21 @@ public class Solution {
                 tmp = lastHigh.height * (cur.position - 1 - lastHigh.position + 1);
                 s = tmp > s ? tmp : s;
 
-                //replace highest with equal to current. use highest as most left house
-                if (cur.height > stack.peekFirst().height) {
-                    stack.addFirst(new House(cur.height, lastHigh.position));
-                }
+
                 //
-                if (cur.height == stack.peekFirst().height) {
+                if (stack.peekFirst() != null && cur.height == stack.peekFirst().height) {
                     //do nothing
                 }
-                if (cur.height < stack.peekFirst().height) {
-                    lastHigh = stack.pollFirst();
-                    tmp = lastHigh.height * (cur.position - 1 - lastHigh.position + 1);
-                    s = tmp > s ? tmp : s;
-
+                if (stack.peekFirst() != null && cur.height < stack.peekFirst().height) {
+                    while (stack.peekFirst() != null && cur.height < stack.peekFirst().height) {
+                        lastHigh = stack.pollFirst();
+                        tmp = lastHigh.height * (cur.position - 1 - lastHigh.position + 1);
+                        s = tmp > s ? tmp : s;
+                    }
+                }
+                //replace highest with equal to current. use highest as most left house
+                if (stack.peekFirst() == null || stack.peekFirst() != null && cur.height > stack.peekFirst().height) {
+                    stack.addFirst(new House(cur.height, lastHigh.position));
                 }
 
             }
@@ -60,6 +61,14 @@ public class Solution {
                     s = tmp > s ? tmp : s;
                 }
             }
+//            height >= 1 by condition. Otherwise below loop
+//            if (cur.height == 0) {
+//                while (!stack.isEmpty()) {
+//                    lastHigh = stack.pollFirst();
+//                    tmp = lastHigh.height * (cur.position - lastHigh.position + 1);
+//                    s = tmp > s ? tmp : s;
+//                }
+//            }
 
             lastViewed = cur;
 

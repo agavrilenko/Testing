@@ -4,10 +4,8 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
-import org.my.hrank.data_structures.arrays.left_rotation.LeftRotationSolutionTest;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -38,6 +36,9 @@ public abstract class AbstractTest {
             Assert.fail();
         }
         for (File inFile : ins) {
+            if (inFile.getAbsolutePath().endsWith("ignore")) {
+                continue;
+            }
             String outFile = inFile.getAbsolutePath().replace(File.separator + "in" + File.separator,
                     File.separator + "out" + File.separator);
             Scanner inScanner = new Scanner(inFile);

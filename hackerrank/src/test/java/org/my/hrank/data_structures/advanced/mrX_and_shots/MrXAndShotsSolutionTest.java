@@ -42,7 +42,7 @@ public class MrXAndShotsSolutionTest extends AbstractTest {
         }
 
         int result = solve(shots, players);
-        long expected = Long.parseLong(outScanner.nextLine().trim());
+        int expected = Integer.parseInt(outScanner.nextLine().trim());
         collector.checkThat(getMessage(absolutePath), result, IsEqual.equalTo(expected));
     }
 }

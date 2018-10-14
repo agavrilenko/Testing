@@ -9,9 +9,49 @@ public class Solution {
 
     // Complete the solve function below.
     static int solve(int[][] shots, int[][] players) {
-        return 0;
+
+        //find max range in shots
+        int max = 0;
+        for (int[] shot : shots) {
+            max = max > shot[0] ? max : shot[0];
+            max = max > shot[1] ? max : shot[1];
+        }
+
+        int[] left = new int[max + 1];
+        int[] right = new int[max + 1];
+        for (int[] shot : shots) {
+            left[shot[0]]++;
+            right[shot[1]]++;
+        }
+
+        int[] totalLeft = new int[max + 1];
+        int[] totalRight = new int[max + 1];
+        int currentLeft = 0;
+        int currentRight = 0;
+        for (int i = 0; i < max + 1; i++) {
+            currentLeft += left[i];
+            currentRight += right[i];
+            totalLeft[i] = currentLeft;
+            totalRight[i] = currentRight;
+        }
+
+        //check players
+        int sum = 0;
+        for (int[] player : players) {
+            if (player[0] > max) {
+                continue;
+            }
+            int rightBound = player[1];
+            if (rightBound > max) {
+                rightBound = max;
+            }
+            sum += totalLeft[rightBound] - totalRight[player[0] - 1];
+        }
+
+        return sum;
 
     }
+
 
     private static final Scanner scanner = new Scanner(System.in);
 

@@ -13,7 +13,7 @@ public class Solution {
         //find max range in shots
         int max = 0;
         for (int[] shot : shots) {
-            max = max > shot[0] ? max : shot[0];
+//            max = max > shot[0] ? max : shot[0];
             max = max > shot[1] ? max : shot[1];
         }
 

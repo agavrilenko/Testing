@@ -25,8 +25,9 @@ public class FindMaxIndexProductSolutionTest extends AbstractTest {
         }
 
 
-        int expected = Integer.parseInt(outScanner.nextLine().trim());
-        int result = solve(arr);
+        String line = outScanner.nextLine().trim();
+        long expected = Long.parseLong(line);
+        long result = solve(arr);
         collector.checkThat(getMessage(absolutePath), result, IsEqual.equalTo(expected));
     }
 }

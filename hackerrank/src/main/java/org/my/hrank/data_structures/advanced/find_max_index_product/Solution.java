@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Solution {
 
     // Complete the solve function below.
-    static int solve(int[] arr) {
+    static long solve(int[] arr) {
 
         Node[] nodes = new Node[arr.length];
         for (int i = 0; i < arr.length; i++) {
@@ -19,19 +19,20 @@ public class Solution {
         Node root = nodes[0];
         for (int i = 1; i < nodes.length; i++) {
             findMaxLeft(root, nodes[i]);
-            addNodeToTree(root, nodes[i]);
+            addNodeToTree(root, nodes[i], true);
         }
         for (Node node : nodes) {
             node.left = null;
             node.right = null;
+            node.lastEqual = node.index;
         }
         root = nodes[nodes.length - 1];
         for (int i = nodes.length - 2; i >= 0; i--) {
             findMaxRight(root, nodes[i]);
-            addNodeToTree(root, nodes[i]);
+            addNodeToTree(root, nodes[i], false);
         }
 
-        int sum = 0;
+        long sum = 0;
         for (Node node : nodes) {
             int tmp = 0;
             int maxRight = node.maxRight;
@@ -51,16 +52,20 @@ public class Solution {
         return sum;
     }
 
-    private static void addNodeToTree(Node root, Node node) {
+    private static void addNodeToTree(Node root, Node node, boolean left) {
         if (root.value < node.value) {
             if (root.right != null) {
-                addNodeToTree(root.right, node);
+                addNodeToTree(root.right, node, left);
             } else {
                 root.right = node;
             }
+        } else if (root.value == node.value && root.lastEqual + 1 == node.index && left) {
+            root.lastEqual++;
+        } else if (root.value == node.value && root.lastEqual - 1 == node.index && !left) {
+            root.lastEqual--;
         } else {
             if (root.left != null) {
-                addNodeToTree(root.left, node);
+                addNodeToTree(root.left, node, left);
             } else {
                 root.left = node;
             }
@@ -74,7 +79,7 @@ public class Solution {
             findMaxLeft(root.right, node);
         } else {
             if (root.value > node.value && root.index > node.maxLeft) {
-                node.maxLeft = root.index;
+                node.maxLeft = root.lastEqual;
             }
             if (root.left != null && root.left.value >= node.value) {
                 findMaxLeft(root.left, node);
@@ -93,7 +98,7 @@ public class Solution {
             findMaxRight(root.right, node);
         } else {
             if (root.value > node.value && root.index < node.maxRight) {
-                node.maxRight = root.index;
+                node.maxRight = root.lastEqual;
             }
             if (root.left != null && root.left.value >= node.value) {
                 findMaxRight(root.left, node);
@@ -111,12 +116,15 @@ public class Solution {
         private int value;
         private Node left, right;
         private int index;
+        private int lastEqual;
         private int maxLeft = -1;
         private int maxRight = Integer.MAX_VALUE;
+
 
         public Node(int value, int index) {
             this.value = value;
             this.index = index;
+            this.lastEqual = index;
         }
 
         @Override
@@ -148,7 +156,7 @@ public class Solution {
             arr[arrItr] = arrItem;
         }
 
-        int result = solve(arr);
+        long result = solve(arr);
 
         bufferedWriter.write(String.valueOf(result));
         bufferedWriter.newLine();

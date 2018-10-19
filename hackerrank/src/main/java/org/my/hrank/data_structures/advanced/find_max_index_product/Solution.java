@@ -17,13 +17,24 @@ public class Solution {
         }
 
         //find max left
-//        traverseInTree(nodes);
-
         for (int i = 1; i < nodes.length - 1; i++) {
             if (nodes[i].value < nodes[i - 1].value) {
                 nodes[i].maxLeft = nodes[i - 1].index;
+            } else if (nodes[i].value == nodes[i - 1].value) {
+                nodes[i].maxLeft = nodes[i - 1].maxLeft;
             } else {
-                nodes[i].maxLeft = getMax(nodes, nodes[i]);
+                getMaxLeft(nodes, nodes[i - 1], nodes[i]);
+            }
+
+        }
+
+        for (int i = nodes.length - 2; i > 0; i--) {
+            if (nodes[i].value < nodes[i + 1].value) {
+                nodes[i].maxRight = nodes[i + 1].index;
+            } else if (nodes[i].value == nodes[i + 1].value) {
+                nodes[i].maxRight = nodes[i + 1].maxRight;
+            } else {
+                getMaxRight(nodes, nodes[i + 1], nodes[i]);
             }
 
         }
@@ -39,107 +50,40 @@ public class Solution {
             sum = sum > tmp ? sum : tmp;
         }
 
-        // if node.value > root - go right
-        // if node.value <= root - go left
-
-        //find max right
-
-
         return sum;
     }
 
-    private static int getMax(Node[] nodes, Node node) {
-        if(nodes[node.index - 1].value > node.value){
+    private static void getMaxLeft(Node[] nodes, Node left, Node node) {
+
+        int maxLeft = left.maxLeft;
+        if (maxLeft == -1) {
+            return;
         }
-          return 0;
-
-
-    }
-
-    private static void traverseInTree(Node[] nodes) {
-        Node root = nodes[0];
-        for (int i = 1; i < nodes.length; i++) {
-
-            findMaxLeft(root, nodes[i]);
-            addNodeToTree(root, nodes[i], true);
-        }
-        for (Node node : nodes) {
-            node.left = null;
-            node.right = null;
-            node.lastEqual = node.index;
-        }
-        root = nodes[nodes.length - 1];
-        for (int i = nodes.length - 2; i >= 0; i--) {
-            findMaxRight(root, nodes[i]);
-            addNodeToTree(root, nodes[i], false);
-        }
-    }
-
-    private static void addNodeToTree(Node root, Node node, boolean left) {
-        if (root.value < node.value) {
-            if (root.right != null) {
-                addNodeToTree(root.right, node, left);
-            } else {
-                root.right = node;
-            }
-        } else if (root.value == node.value && root.lastEqual < node.index && left) {
-            root.lastEqual = node.index;
-        } else if (root.value == node.value && root.lastEqual > node.index && !left) {
-            root.lastEqual = node.index;
+        if (nodes[maxLeft].value > node.value) {
+            node.maxLeft = nodes[maxLeft].index;
         } else {
-            if (root.left != null) {
-                addNodeToTree(root.left, node, left);
-            } else {
-                root.left = node;
-            }
+            getMaxLeft(nodes, nodes[maxLeft], node);
         }
     }
 
-    private static void findMaxLeft(Node root, Node node) {
+    private static void getMaxRight(Node[] nodes, Node right, Node node) {
 
-        if (node.value > root.value && root.right != null) {
-            //traverse right. Left doest have bigger value
-            findMaxLeft(root.right, node);
+        int maxRight = right.maxRight;
+        if (maxRight == Integer.MAX_VALUE) {
+            return;
+        }
+        if (nodes[maxRight].value > node.value) {
+            node.maxRight = nodes[maxRight].index;
         } else {
-            if (root.value > node.value && root.index > node.maxLeft) {
-                node.maxLeft = root.lastEqual;
-            }
-            if (root.left != null && root.left.value >= node.value) {
-                findMaxLeft(root.left, node);
-            }
-            if (root.right != null) {
-                findMaxLeft(root.right, node);
-            }
+            getMaxRight(nodes, nodes[maxRight], node);
         }
-
     }
 
-    private static void findMaxRight(Node root, Node node) {
-
-        if (node.value > root.value && root.right != null) {
-            //traverse right. Left doest have bigger value
-            findMaxRight(root.right, node);
-        } else {
-            if (root.value > node.value && root.index < node.maxRight) {
-                node.maxRight = root.lastEqual;
-            }
-            if (root.left != null && root.left.value >= node.value) {
-                findMaxRight(root.left, node);
-            }
-            if (root.right != null) {
-                findMaxRight(root.right, node);
-            }
-
-        }
-
-    }
 
     public static class Node {
 
         private int value;
-        private Node left, right;
         private int index;
-        private int lastEqual;
         private int maxLeft = -1;
         private int maxRight = Integer.MAX_VALUE;
 
@@ -147,7 +91,6 @@ public class Solution {
         public Node(int value, int index) {
             this.value = value;
             this.index = index;
-            this.lastEqual = index;
         }
 
         @Override

@@ -10,34 +10,30 @@ public class Solution {
     // Complete the solve function below.
     static long solve(int[] arr) {
 
+
         Node[] nodes = new Node[arr.length];
         for (int i = 0; i < arr.length; i++) {
             nodes[i] = new Node(arr[i], i);
         }
 
         //find max left
-        Node root = nodes[0];
-        for (int i = 1; i < nodes.length; i++) {
-            findMaxLeft(root, nodes[i]);
-            addNodeToTree(root, nodes[i], true);
-        }
-        for (Node node : nodes) {
-            node.left = null;
-            node.right = null;
-            node.lastEqual = node.index;
-        }
-        root = nodes[nodes.length - 1];
-        for (int i = nodes.length - 2; i >= 0; i--) {
-            findMaxRight(root, nodes[i]);
-            addNodeToTree(root, nodes[i], false);
+//        traverseInTree(nodes);
+
+        for (int i = 1; i < nodes.length - 1; i++) {
+            if (nodes[i].value < nodes[i - 1].value) {
+                nodes[i].maxLeft = nodes[i - 1].index;
+            } else {
+                nodes[i].maxLeft = getMax(nodes, nodes[i]);
+            }
+
         }
 
         long sum = 0;
         for (Node node : nodes) {
-            int tmp = 0;
-            int maxRight = node.maxRight;
-            int maxLeft = node.maxLeft;
-            if (maxRight != -1 && maxLeft != -1) {
+            long tmp = 0;
+            long maxRight = node.maxRight;
+            long maxLeft = node.maxLeft;
+            if (maxRight != -1 && maxLeft != -1 && maxRight != Integer.MAX_VALUE && maxLeft != Integer.MAX_VALUE) {
                 tmp = (maxLeft + 1) * (maxRight + 1);
             }
             sum = sum > tmp ? sum : tmp;
@@ -52,6 +48,33 @@ public class Solution {
         return sum;
     }
 
+    private static int getMax(Node[] nodes, Node node) {
+        if(nodes[node.index - 1].value > node.value){
+        }
+          return 0;
+
+
+    }
+
+    private static void traverseInTree(Node[] nodes) {
+        Node root = nodes[0];
+        for (int i = 1; i < nodes.length; i++) {
+
+            findMaxLeft(root, nodes[i]);
+            addNodeToTree(root, nodes[i], true);
+        }
+        for (Node node : nodes) {
+            node.left = null;
+            node.right = null;
+            node.lastEqual = node.index;
+        }
+        root = nodes[nodes.length - 1];
+        for (int i = nodes.length - 2; i >= 0; i--) {
+            findMaxRight(root, nodes[i]);
+            addNodeToTree(root, nodes[i], false);
+        }
+    }
+
     private static void addNodeToTree(Node root, Node node, boolean left) {
         if (root.value < node.value) {
             if (root.right != null) {
@@ -59,10 +82,10 @@ public class Solution {
             } else {
                 root.right = node;
             }
-        } else if (root.value == node.value && root.lastEqual + 1 == node.index && left) {
-            root.lastEqual++;
-        } else if (root.value == node.value && root.lastEqual - 1 == node.index && !left) {
-            root.lastEqual--;
+        } else if (root.value == node.value && root.lastEqual < node.index && left) {
+            root.lastEqual = node.index;
+        } else if (root.value == node.value && root.lastEqual > node.index && !left) {
+            root.lastEqual = node.index;
         } else {
             if (root.left != null) {
                 addNodeToTree(root.left, node, left);

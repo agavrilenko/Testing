@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ArrayUtils {
-    public static <T extends Number> List<T> readArray(Scanner outScanner, Class clazz) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static <T extends Number> List<T> readArray(Scanner outScanner, Class<T> clazz) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         LinkedList<T> list = new LinkedList<>();
         String[] split = outScanner.nextLine().trim().split(" ");
         for (String in : split) {
-            Constructor con = clazz.getConstructor(String.class);
-            list.add((T) con.newInstance(in));
+            Constructor<T> con = clazz.getConstructor(String.class);
+            list.add(con.newInstance(in));
         }
         return list;
 

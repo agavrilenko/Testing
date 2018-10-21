@@ -4,12 +4,11 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
 public class ArrayUtils {
-    public static <T extends Number> List<T> readArray(Scanner outScanner, Class<T> clazz) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static <T extends Number> List<T> readArray(String line, Class<T> clazz) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         LinkedList<T> list = new LinkedList<>();
-        String[] split = outScanner.nextLine().trim().split(" ");
+        String[] split = line.trim().split(" ");
         for (String in : split) {
             Constructor<T> con = clazz.getConstructor(String.class);
             list.add(con.newInstance(in));

@@ -30,7 +30,7 @@ public class WaiterSolutionTest extends AbstractTest {
 
         int[] actuals = waiter(number, q);
 
-        List<Integer> expectedList = ArrayUtils.readArray(outScanner, Integer.class);
+        List<Integer> expectedList = ArrayUtils.readArray(outScanner.nextLine(), Integer.class);
         Integer[] expected = expectedList.toArray(new Integer[]{});
 
         Integer[] act = new Integer[actuals.length];

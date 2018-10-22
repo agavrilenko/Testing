@@ -28,9 +28,7 @@ public abstract class AbstractTest {
 
     public void test() throws Exception {
 
-        String inFolder = "src/test/resources/" + this.getClass().getSimpleName() + "/in";
-        URL url = AbstractTest.class.getClassLoader().getResource(inFolder);
-        File[] ins = new File(inFolder).listFiles();
+        File[] ins = getTestFiles();
 //        File[] outs = new File(outFolder).listFiles();
         if (ins == null) {
             Assert.fail();
@@ -46,6 +44,12 @@ public abstract class AbstractTest {
             testAndAssert(inScanner, expData, inFile.getAbsolutePath());
         }
 
+    }
+
+    protected File[] getTestFiles() {
+        String inFolder = "src/test/resources/unpackaged/" + this.getClass().getSimpleName() + "/in";
+        URL url = AbstractTest.class.getClassLoader().getResource(inFolder);
+        return new File(inFolder).listFiles();
     }
 
 }

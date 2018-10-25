@@ -52,11 +52,11 @@ public class CommonChildSolution {
             }
         }
         HashSet<String> strings = new HashSet<>();
-        if (matrix[i - 1][j] >= matrix[i - 1][j]) {
-            strings.addAll(backtrackAll(matrix, first, second, i - 1, j));
-        }
         if (matrix[i][j - 1] >= matrix[i - 1][j]) {
             strings.addAll(backtrackAll(matrix, first, second, i, j - 1));
+        }
+        if (matrix[i - 1][j] >= matrix[i - 1][j]) {
+            strings.addAll(backtrackAll(matrix, first, second, i - 1, j));
         }
         return strings;
 

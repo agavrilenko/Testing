@@ -29,8 +29,8 @@ public class EqualSolutionTest extends AbstractPackageTest {
                 arr[i] = arrItem;
             }
 
-            int result = equal(arr);
-            int expected = Integer.parseInt(outScanner.nextLine().trim());
+            long result = equal(arr);
+            long expected = Integer.parseInt(outScanner.nextLine().trim());
             collector.checkThat(getMessage(absolutePath), result, Is.is(expected));
 
         }

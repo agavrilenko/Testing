@@ -3,10 +3,7 @@ package org.my.hrank.algorithms.dynamic_programming;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Scanner;
+import java.util.*;
 
 public class TheChangeCoinProblemSolution {
 
@@ -19,10 +16,10 @@ public class TheChangeCoinProblemSolution {
         if (steps.length == 0 || n == 0) {
             return 1;
         }
-        ArrayList<Hop>[] road = new ArrayList[(int) n + 1];
+        HashSet<Hop>[] road = new HashSet[(int) n + 1];
 
         for (int i = 0; i < road.length; i++) {
-            road[i] = new ArrayList<>();
+            road[i] = new HashSet<>();
         }
 //        final value should be finish, but we have offset of start value
 //        to decrease number of computations
@@ -31,6 +28,7 @@ public class TheChangeCoinProblemSolution {
             for (Hop hop : road[i]) {
                 for (int j = 0; j < steps.length; j++) {
                     Hop nextHop = new Hop(hop.numberOfHops + 1, steps[j]);
+                    nextHop.chain.add(nextHop.value);
                     nextHop.chain.addAll(hop.chain);
                     if (i + steps[j] < road.length) {
                         road[i + (int) steps[j]].add(nextHop);
@@ -39,7 +37,12 @@ public class TheChangeCoinProblemSolution {
             }
         }
 
-        ArrayList<Hop> hops = road[road.length - 1];
+
+//        HashSet<Hop> hops = road[road.length - 1];
+//        return hops.size();
+
+
+        HashSet<Hop> hops = road[road.length - 1];
         HashSet<ArrayList<Long>> result = new HashSet<>();
         for (Hop hop : hops) {
             Collections.sort(hop.chain);
@@ -58,7 +61,7 @@ public class TheChangeCoinProblemSolution {
         public Hop(long index, long value) {
             this.numberOfHops = index;
             this.value = value;
-            chain.add(value);
+//            chain.add(value);
         }
 
         @Override
@@ -67,6 +70,21 @@ public class TheChangeCoinProblemSolution {
                     "numberOfHops=" + numberOfHops +
                     ", value=" + value +
                     '}';
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Hop hop = (Hop) o;
+            return numberOfHops == hop.numberOfHops &&
+                    value == hop.value;
+        }
+
+        @Override
+        public int hashCode() {
+
+            return Objects.hash(numberOfHops, value);
         }
     }
 

@@ -94,7 +94,8 @@ public class TheChangeCoinProblemSolution {
         // Print the number of ways of making change for 'n' units using coins having the values given by 'c'
 
         long ways = getWays(n, c);
-
+        bufferedWriter.write(String.valueOf(ways));
+        bufferedWriter.newLine();
         bufferedWriter.close();
 
         scanner.close();

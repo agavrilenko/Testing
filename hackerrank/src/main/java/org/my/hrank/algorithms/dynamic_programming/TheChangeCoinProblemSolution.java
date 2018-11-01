@@ -9,139 +9,32 @@ public class TheChangeCoinProblemSolution {
 
     // Complete the getWays function below.
     static long getWays(long n, long[] steps) {
-        long entireTest = System.currentTimeMillis();
         if (n < 0) {
             return 0;
         }
         if (steps.length == 0 || n == 0) {
             return 1;
         }
-        HashSet<Hop>[] road = new HashSet[(int) n + 1];
-
-        for (int i = 0; i < road.length; i++) {
-            road[i] = new HashSet<>();
-        }
-        road[0].add(new Hop(0, 0));
-        long totalTime = 0;
-        long current = 0;
-        for (int i = 0; i < road.length; i++) {
-            if (i > 0) {
-                road[i - 1] = null;
-            }
-            for (Hop hop : road[i]) {
-                for (int j = 0; j < steps.length; j++) {
-                    current = System.currentTimeMillis();
-                    Hop nextHop = new Hop(hop.numberOfHops + 1, steps[j]);
-//                    nextHop.chain.addAll(hop.chain);
-//                    nextHop.chain.add(nextHop.value);
-//                    Collections.sort(nextHop.chain);
-                    nextHop.chain = binaryInsert(hop.chain, nextHop.value);
-                    totalTime += System.currentTimeMillis() - current;
-                    if (i + steps[j] < road.length) {
-                        road[i + (int) steps[j]].add(nextHop);
-                    }
-                }
+//        result[0]=1; // init base case n=0
+        // go thru coins 1-by-1 to build up result[] dynamically
+        // just need to consider cases where sum j>=steps[i]
+        long[] result = new long[(int) n + 1];
+        result[0] = 1;
+        for (int i = 0; i < steps.length; i++) {
+            for (int j = (int) steps[i]; j <= n; j++) {
+                // find result to get sum j given value steps[i]
+                // it consists of those found earlier plus
+                // new ones.
+                // E.g. if steps[]=1,2,3... and steps[i]=3,j=5,
+                //      new ones will now include '3' with
+                //      result[2] = 2, that is:
+                //      '3' with '2', '3' with '1'+'1'
+                result[j] += result[j - (int) steps[i]];
             }
         }
-
-
-        HashSet<Hop> hops = road[road.length - 1];
-//        HashSet<ArrayList<Long>> result = new HashSet<>();
-//        for (Hop hop : hops) {
-//            Collections.sort(hop.chain);
-//            result.add(hop.chain);
-//        }
-        System.out.println("Total time in sorting is " + totalTime);
-        System.out.println("Entire test " + (System.currentTimeMillis() - entireTest));
-
-//        return result.size();
-        return hops.size();
-
+        return result[(int) n];
     }
 
-    public static ArrayList<Long> binaryInsert(ArrayList<Long> values, long value) {
-        ArrayList<Long> result = new ArrayList<>(values.size() + 1);
-        result.addAll(values);
-        if (result.size() == 0) {
-            result.add(value);
-            return result;
-        }
-        if (result.size() == 1) {
-            if (value >= result.get(0)) {
-                result.add(value);
-            } else {
-                result.add(0, value);
-            }
-            return result;
-        }
-        int left = 0;
-        int right = result.size() - 1;
-        int middle = -1;
-        int position = -1;
-        while (position == -1) {
-
-            if (right - left == 1) {
-                if (value <= result.get(right)) {
-                    position = right;
-                }
-                if (value > result.get(right)) {
-                    position = right + 1;
-                }
-                if (value < result.get(left)) {
-                    position = left;
-                }
-            }
-            middle = (left + right + 1) / 2;
-            if (value > result.get(middle)) {
-                left = middle;
-            }
-            if (value < result.get(middle)) {
-                right = middle;
-            }
-            if (value == result.get(middle)) {
-                position = middle + 1;
-                break;
-            }
-
-        }
-        result.add(position, value);
-
-        return result;
-    }
-
-    public static class Hop {
-        long numberOfHops;
-        long value;
-        ArrayList<Long> chain = new ArrayList<>();
-
-        public Hop(long index, long value) {
-            this.numberOfHops = index;
-            this.value = value;
-//            chain.add(value);
-        }
-
-        @Override
-        public String toString() {
-            return "Hop{" +
-                    "numberOfHops=" + numberOfHops +
-                    ", value=" + value +
-                    '}';
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Hop hop = (Hop) o;
-            return Objects.equals(chain, hop.chain);
-        }
-
-        @Override
-        public int hashCode() {
-
-            return Objects.hash(chain);
-        }
-    }
 
     private static final Scanner scanner = new Scanner(System.in);
 

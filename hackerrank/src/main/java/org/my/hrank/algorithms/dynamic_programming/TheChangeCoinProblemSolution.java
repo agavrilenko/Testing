@@ -20,18 +20,29 @@ public class TheChangeCoinProblemSolution {
         // just need to consider cases where sum j>=steps[i]
         long[] result = new long[(int) n + 1];
         result[0] = 1;
-        for (int i = 0; i < steps.length; i++) {
-            for (int j = (int) steps[i]; j <= n; j++) {
-                // find result to get sum j given value steps[i]
-                // it consists of those found earlier plus
-                // new ones.
-                // E.g. if steps[]=1,2,3... and steps[i]=3,j=5,
-                //      new ones will now include '3' with
-                //      result[2] = 2, that is:
-                //      '3' with '2', '3' with '1'+'1'
-                result[j] += result[j - (int) steps[i]];
+//        for (int i = 0; i < steps.length; i++) {
+//            for (int j = (int) steps[i]; j <= n; j++) {
+        // find result to get sum j given value steps[i]
+        // it consists of those found earlier plus
+        // new ones.
+        // E.g. if steps[]=1,2,3... and steps[i]=3,j=5,
+        //      new ones will now include '3' with
+        //      result[2] = 2, that is:
+        //      '3' with '2', '3' with '1'+'1'
+//                result[j] += result[j - (int) steps[i]];
+//            }
+//        }
+        //take coins one by one and count next sum as sum of current and next.
+        //
+        for (int j = 0; j < steps.length; j++) {
+            for (int i = 0; i <= n; i++) {
+                if (i + (int) steps[j] <= n) {
+                    result[i + (int) steps[j]] = result[i] + result[i + (int) steps[j]];
+                }
             }
         }
+
+
         return result[(int) n];
     }
 

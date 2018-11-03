@@ -41,18 +41,22 @@ public class TheMaximumSubarraySolution {
         }
         int counter = 2;
 //        for (int i = 2; i < arr.length + 1; i++) {
+        long start = 0;
+        long total = 0;
         while (counter < arr.length + 1) {
+            start = System.currentTimeMillis();
             for (int j = 0; j < arr.length - counter + 1; j++) {
-                possibleSum[2][j] = possibleSum[2 - 1][j] + possibleSum[2 - 1][j + 1] - possibleSum[2 - 2][j + 1];
+                possibleSum[2][j] = possibleSum[1][j] + possibleSum[1][j + 1] - possibleSum[0][j + 1];
                 max = max > possibleSum[2][j] ? max : possibleSum[2][j];
             }
             possibleSum[0] = possibleSum[1];
             possibleSum[1] = possibleSum[2];
             possibleSum[2] = possibleSum[0];
+            total += System.currentTimeMillis() - start;
             counter++;
         }
         result[0] = max;
-
+        System.out.println("Total time is " + total);
         return result;
 
     }

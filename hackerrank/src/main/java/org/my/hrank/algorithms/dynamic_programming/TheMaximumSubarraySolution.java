@@ -1,12 +1,9 @@
 package org.my.hrank.algorithms.dynamic_programming;
 
-import java.io.*;
-import java.math.*;
-import java.security.*;
-import java.text.*;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.regex.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class TheMaximumSubarraySolution {
 
@@ -30,33 +27,38 @@ public class TheMaximumSubarraySolution {
             tmpSum = tmpSum > tmpSum + arr[i] ? tmpSum : tmpSum + arr[i];
         }
         result[1] = tmpSum;
-        int[] empty = new int[arr.length];
-        int[][] possibleSum = new int[3][arr.length];
+        /*int[][] possibleSum = new int[2][arr.length];
         int max = Integer.MIN_VALUE;
         for (int i = 0; i < arr.length; i++) {
-            possibleSum[0][i] = 0;
-            possibleSum[1][i] = arr[i];
-            possibleSum[2][i] = 0;
+            possibleSum[0][i] = arr[i];
+            possibleSum[1][i] = 0;
             max = max > arr[i] ? max : arr[i];
         }
-        int counter = 2;
-//        for (int i = 2; i < arr.length + 1; i++) {
+        int counter = 1;
         long start = 0;
         long total = 0;
-        while (counter < arr.length + 1) {
+        while (counter < arr.length) {
             start = System.currentTimeMillis();
-            for (int j = 0; j < arr.length - counter + 1; j++) {
-                possibleSum[2][j] = possibleSum[1][j] + possibleSum[1][j + 1] - possibleSum[0][j + 1];
-                max = max > possibleSum[2][j] ? max : possibleSum[2][j];
+            for (int j = 0; j < arr.length - counter; j++) {
+                possibleSum[1][j] = possibleSum[0][j] + arr[counter + j];
+                max = max > possibleSum[1][j] ? max : possibleSum[1][j];
             }
-            possibleSum[0] = possibleSum[1];
-            possibleSum[1] = possibleSum[2];
-            possibleSum[2] = possibleSum[0];
             total += System.currentTimeMillis() - start;
+            possibleSum[0] = possibleSum[1];
             counter++;
+        }*/
+
+//        https://en.wikipedia.org/wiki/Maximum_subarray_problem
+        int max_ending_here = 0;
+        int max_so_far = Integer.MIN_VALUE;
+        /*OR int max_so_far = arr[0];*/
+
+        for (int x : arr) {
+            max_ending_here = Math.max(x, max_ending_here + x);
+            max_so_far = Math.max(max_so_far, max_ending_here);
         }
-        result[0] = max;
-        System.out.println("Total time is " + total);
+        result[0] = max_so_far;
+//        System.out.println("Total time is " + total);
         return result;
 
     }

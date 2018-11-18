@@ -1,19 +1,49 @@
 package org.my.hrank.algorithms.dynamic_programming;
 
-import java.io.*;
-import java.math.*;
-import java.security.*;
-import java.text.*;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.regex.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class CandiesSolution {
 
     // Complete the candies function below.
     static long candies(int n, int[] arr) {
-        return -1;
-
+        long toAdd = 1;
+        long sum = 0;
+        long dec = 0;
+        int[] tmp = new int[arr.length + 1];
+        System.arraycopy(arr, 0, tmp, 0, arr.length);
+        arr = tmp;
+        arr[arr.length - 1] = arr[arr.length - 2];
+        //check when starting from decreasing
+        for (int i = 0; i < arr.length - 1; i++) {
+            sum += toAdd;
+            if (arr[i] < arr[i + 1] && dec == 0) {
+                toAdd++;
+                continue;
+            }
+            if (arr[i] == arr[i + 1] && dec == 0) {
+                toAdd = 1;
+                continue;
+            }
+            if (arr[i] > arr[i + 1]) {
+                toAdd--;
+                dec++;
+                continue;
+            }
+            if (arr[i] <= arr[i + 1] && dec != 0) {
+                sum -= dec * (toAdd - 1);
+                if (arr[i] < arr[i + 1]) {
+                    toAdd = 2;
+                }
+                if (arr[i] == arr[i + 1]) {
+                    toAdd = 1;
+                }
+                dec = 0;
+            }
+        }
+        return sum;
     }
 
     private static final Scanner scanner = new Scanner(System.in);

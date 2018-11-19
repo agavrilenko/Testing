@@ -20,6 +20,7 @@ public class CandiesSolution {
 //            toAdd = 0;
             dec++;
         }
+        //need to know length of raise and length of fall. Take max of peak.
         //check when starting from decreasing
         for (int i = 0; i < arr.length - 1; i++) {
             sum += toAdd;

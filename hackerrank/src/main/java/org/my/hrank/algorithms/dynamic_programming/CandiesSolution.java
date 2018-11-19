@@ -16,6 +16,10 @@ public class CandiesSolution {
         System.arraycopy(arr, 0, tmp, 0, arr.length);
         arr = tmp;
         arr[arr.length - 1] = arr[arr.length - 2];
+        if(arr[0] > arr[1]){
+//            toAdd = 0;
+            dec++;
+        }
         //check when starting from decreasing
         for (int i = 0; i < arr.length - 1; i++) {
             sum += toAdd;

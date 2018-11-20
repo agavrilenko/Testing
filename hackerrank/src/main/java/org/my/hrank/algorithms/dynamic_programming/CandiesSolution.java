@@ -12,18 +12,79 @@ public class CandiesSolution {
         long toAdd = 1;
         long sum = 0;
         long dec = 0;
+        long chg = 0;
+        int up = 0;
+        long localMax = 0;
         int[] tmp = new int[arr.length + 1];
         System.arraycopy(arr, 0, tmp, 0, arr.length);
         arr = tmp;
         arr[arr.length - 1] = arr[arr.length - 2];
-        if(arr[0] > arr[1]){
-//            toAdd = 0;
-            dec++;
+        if (arr[0] > arr[1]) {
+            up = -1;
+        } else if (arr[0] < arr[1]) {
+            up = 1;
+        } else {
+            up = 0;
         }
         //need to know length of raise and length of fall. Take max of peak.
         //check when starting from decreasing
         for (int i = 0; i < arr.length - 1; i++) {
-            sum += toAdd;
+
+            if (up == 1) {
+                if (arr[i] < arr[i + 1]) {
+                    chg++;
+                }
+                if (arr[i] > arr[i + 1]) {
+                    sum += chg * (chg + 1) / 2;
+                    localMax = chg + 1;
+                    up = -1;
+                    chg = 1;
+                }
+                if (arr[i] == arr[i + 1]) {
+                    sum += chg * (chg + 1) / 2;
+                    localMax = 0;
+                    up = 0;
+                }
+                continue;
+            }
+            if (up == -1) {
+                if (arr[i] > arr[i + 1]) {
+                    chg++;
+                }
+                if (arr[i] < arr[i + 1]) {
+                    sum += chg * (chg + 1) / 2;
+                    chg++;
+                    sum += Math.max(localMax, chg);
+                    chg = 1;
+
+                    up = 1;
+                }
+                if (arr[i] == arr[i + 1]) {
+                    up = 0;
+                    sum += chg * (chg + 1) / 2;
+                    chg++;
+                    sum += Math.max(localMax, chg);
+                    chg = 1;
+                }
+                continue;
+            }
+            if (up == 0) {
+                if (arr[i] > arr[i + 1]) {
+                    chg++;
+                    up = -1;
+                }
+                if (arr[i] < arr[i + 1]) {
+                    chg++;
+                    up = 1;
+                }
+                if (arr[i] == arr[i + 1]) {
+                    up = 0;
+                    sum += 1;
+                }
+            }
+
+
+            /*sum += toAdd;
             if (arr[i] < arr[i + 1] && dec == 0) {
                 toAdd++;
                 continue;
@@ -46,7 +107,7 @@ public class CandiesSolution {
                     toAdd = 1;
                 }
                 dec = 0;
-            }
+            }*/
         }
         return sum;
     }

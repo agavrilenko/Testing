@@ -41,6 +41,7 @@ public class CandiesSolution {
                     chg = 1;
                 }
                 if (arr[i] == arr[i + 1]) {
+                    chg++;
                     sum += chg * (chg + 1) / 2;
                     localMax = 0;
                     up = 0;
@@ -55,6 +56,9 @@ public class CandiesSolution {
                     sum += chg * (chg + 1) / 2;
                     chg++;
                     sum += Math.max(localMax, chg);
+                    if (localMax != 0) {
+                        sum -= 1;
+                    }
                     chg = 1;
 
                     up = 1;

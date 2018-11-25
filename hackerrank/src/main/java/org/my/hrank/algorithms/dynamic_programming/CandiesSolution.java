@@ -9,9 +9,7 @@ public class CandiesSolution {
 
     // Complete the candies function below.
     static long candies(int n, int[] arr) {
-        long toAdd = 1;
         long sum = 0;
-        long dec = 0;
         long chg = 0;
         int up = 0;
         long localMax = 0;
@@ -56,11 +54,11 @@ public class CandiesSolution {
                     sum += chg * (chg + 1) / 2;
                     chg++;
                     sum += Math.max(localMax, chg);
-                    if (localMax != 0) {
+                    //to avoid double booking on the way down/up
+                    if (i - 1 > 0 && arr[i - 1] > arr[i]) {
                         sum -= 1;
                     }
                     chg = 1;
-
                     up = 1;
                 }
                 if (arr[i] == arr[i + 1]) {
@@ -68,6 +66,9 @@ public class CandiesSolution {
                     sum += chg * (chg + 1) / 2;
                     chg++;
                     sum += Math.max(localMax, chg);
+//                    if (i - 1 > 0 && arr[i - 1] > arr[i]) {
+//                        sum -= 1;
+//                    }
                     chg = 1;
                 }
                 continue;
@@ -78,7 +79,7 @@ public class CandiesSolution {
                     up = -1;
                 }
                 if (arr[i] < arr[i + 1]) {
-                    chg++;
+                    chg = 1;
                     up = 1;
                 }
                 if (arr[i] == arr[i + 1]) {
@@ -86,32 +87,6 @@ public class CandiesSolution {
                     sum += 1;
                 }
             }
-
-
-            /*sum += toAdd;
-            if (arr[i] < arr[i + 1] && dec == 0) {
-                toAdd++;
-                continue;
-            }
-            if (arr[i] == arr[i + 1] && dec == 0) {
-                toAdd = 1;
-                continue;
-            }
-            if (arr[i] > arr[i + 1]) {
-                toAdd--;
-                dec++;
-                continue;
-            }
-            if (arr[i] <= arr[i + 1] && dec != 0) {
-                sum -= dec * (toAdd - 1);
-                if (arr[i] < arr[i + 1]) {
-                    toAdd = 2;
-                }
-                if (arr[i] == arr[i + 1]) {
-                    toAdd = 1;
-                }
-                dec = 0;
-            }*/
         }
         return sum;
     }

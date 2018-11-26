@@ -5,90 +5,30 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import static java.util.Arrays.stream;
+
 public class CandiesSolution {
 
     // Complete the candies function below.
     static long candies(int n, int[] arr) {
-        long sum = 0;
-        long chg = 0;
-        int up = 0;
-        long localMax = 0;
-        int fromDown = 0;
-        int[] tmp = new int[arr.length + 1];
-        System.arraycopy(arr, 0, tmp, 0, arr.length);
-        arr = tmp;
-        arr[arr.length - 1] = arr[arr.length - 2];
-        if (arr[0] > arr[1]) {
-            up = -1;
-        } else if (arr[0] < arr[1]) {
-            up = 1;
-        } else {
-            up = 0;
+        long[] cand = new long[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            cand[i] = 1;
         }
-        //need to know length of raise and length of fall. Take max of peak.
-        //check when starting from decreasing
-        for (int i = 0; i < arr.length - 1; i++) {
-            //to avoid double booking on the way down/up
-            if (fromDown == 1) {
-                sum -= 1;
-                fromDown = 0;
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i - 1] < arr[i]) {
+                cand[i] = Math.max(cand[i - 1] + 1, cand[i]);
             }
-            if (up == 1) {
-                if (arr[i] < arr[i + 1]) {
-                    chg++;
-                }
-                if (arr[i] > arr[i + 1]) {
-                    sum += chg * (chg + 1) / 2;
-                    localMax = chg + 1;
-                    up = -1;
-                    chg = 1;
-                }
-                if (arr[i] == arr[i + 1]) {
-                    chg++;
-                    sum += chg * (chg + 1) / 2;
-                    localMax = 0;
-                    up = 0;
-                }
-                continue;
-            }
-            if (up == -1) {
-                if (arr[i] > arr[i + 1]) {
-                    chg++;
-                }
-                if (arr[i] < arr[i + 1]) {
-                    sum += chg * (chg + 1) / 2;
-                    chg++;
-                    sum += Math.max(localMax, chg);
+        }
 
-                    fromDown = 1;
-                    chg = 1;
-                    up = 1;
-                }
-                if (arr[i] == arr[i + 1]) {
-                    up = 0;
-                    sum += chg * (chg + 1) / 2;
-                    chg++;
-                    sum += Math.max(localMax, chg);
-                    chg = 1;
-                }
-                continue;
+        for (int i = arr.length - 2; i >= 0; i--) {
+            if (arr[i] > arr[i + 1]) {
+                cand[i] = Math.max(cand[i + 1] + 1, cand[i]);
             }
-            if (up == 0) {
-                if (arr[i] > arr[i + 1]) {
-                    chg++;
-                    up = -1;
-                }
-                if (arr[i] < arr[i + 1]) {
-                    chg = 1;
-                    up = 1;
-                }
-                if (arr[i] == arr[i + 1]) {
-                    up = 0;
-                    sum += 1;
-                }
-            }
+
         }
-        return sum;
+
+        return stream(cand).reduce((x, y) -> x + y).orElse(0);
     }
 
     private static final Scanner scanner = new Scanner(System.in);

@@ -13,6 +13,7 @@ public class CandiesSolution {
         long chg = 0;
         int up = 0;
         long localMax = 0;
+        int fromDown = 0;
         int[] tmp = new int[arr.length + 1];
         System.arraycopy(arr, 0, tmp, 0, arr.length);
         arr = tmp;
@@ -27,7 +28,11 @@ public class CandiesSolution {
         //need to know length of raise and length of fall. Take max of peak.
         //check when starting from decreasing
         for (int i = 0; i < arr.length - 1; i++) {
-
+            //to avoid double booking on the way down/up
+            if (fromDown == 1) {
+                sum -= 1;
+                fromDown = 0;
+            }
             if (up == 1) {
                 if (arr[i] < arr[i + 1]) {
                     chg++;
@@ -54,10 +59,8 @@ public class CandiesSolution {
                     sum += chg * (chg + 1) / 2;
                     chg++;
                     sum += Math.max(localMax, chg);
-                    //to avoid double booking on the way down/up
-                    if (i - 1 > 0 && arr[i - 1] > arr[i]) {
-                        sum -= 1;
-                    }
+
+                    fromDown = 1;
                     chg = 1;
                     up = 1;
                 }
@@ -66,9 +69,6 @@ public class CandiesSolution {
                     sum += chg * (chg + 1) / 2;
                     chg++;
                     sum += Math.max(localMax, chg);
-//                    if (i - 1 > 0 && arr[i - 1] > arr[i]) {
-//                        sum -= 1;
-//                    }
                     chg = 1;
                 }
                 continue;

@@ -9,9 +9,37 @@ import java.util.regex.*;
 public class SubstringDiffSolution {
 
     // Complete the substringDiff function below.
-    static int substringDiff(int k, String s1, String s2) {
+    private static int smaller(int a, int b) {
+        return a < b ? a : b;
+    }
 
-        return -1;
+    private static int larger(int a, int b) {
+        return a > b ? a : b;
+    }
+
+    private static int solve(int k, String sa, String sb) {
+        int best = 0, n = sb.length();
+        Queue<Integer> q = new ArrayDeque<>();
+        for (int off = 0; off < n; ++off) {
+            for (int i = 0; i + off < n; ++i) {
+                if (sa.charAt(i) == sb.charAt(off + i)) {
+                    q.add(i);
+                    while (i - q.peek() + 1 - q.size() > k) {
+                        q.remove();
+                    }
+                    int score = q.size() + smaller(k, n - off - q.size());
+                    if (score > best) {
+                        best = score;
+                    }
+                }
+            }
+            q.clear();
+        }
+        return best;
+    }
+
+    static int substringDiff(int k, String s1, String s2) {
+        return larger(solve(k, s1, s2), solve(k, s2, s1));
     }
 
     private static final Scanner scanner = new Scanner(System.in);

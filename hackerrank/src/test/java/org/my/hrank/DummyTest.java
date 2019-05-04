@@ -10,24 +10,10 @@ public class DummyTest {
         Assert.assertEquals(1, Dummy.ret(3));
     }
 
-    public static class Dummy {
-        static int ret(int v) {
-            try {
-                throwSurprise(v);
-                return 2;
-            } catch (Exception e) {
-                throw e;
-            } finally {
-                return 1;
-            }
-        }
+@Test
+    public void testFactorial(){
 
-        private static int throwSurprise(int v) {
-            if (v > 0) {
-                return 3;
-            }
-            throw new RuntimeException("Yo matherfucker");
-        }
-    }
+        Assert.assertEquals("15511210043330985984000000", Dummy.extraLongFactorials(25).toString());
+}
 }
 

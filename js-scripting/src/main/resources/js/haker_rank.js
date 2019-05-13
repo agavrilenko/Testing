@@ -703,3 +703,91 @@ res*=i;
 }
 return res;
 }
+
+
+// Complete the appendAndDelete function below.
+var s = "abc", t = "def", k = 6;//Yes
+var s = "hackerhappy", t = "hackerrank", k = 9;//Yes
+var s = "aba", t = "aba", k = 7;//Yes
+var s = "ashley", t = "ash", k = 2;//No
+function appendAndDelete(s, t, k) {
+var sAr = s.split(""), tAr = t.split(""), i = 0, j = 0, ops = 0;
+
+if(s.length >= t.length){
+    while( i < t.length && sAr[i]==tAr[i]){
+       i++;
+    }
+    ops = s.length - i + t.length - i;
+}
+else {
+    while( i < s.length && sAr[i]==tAr[i]){
+       i++;
+    }
+
+    ops = s.length - i + t.length - i;
+}
+
+if((ops <= k && (k-ops)%2==0) || s.length + t.length <= k){
+    return "Yes";
+}
+else{
+    return "No";
+}
+}
+
+
+
+// Complete the squares function below.
+function squares(a, b) {
+    var cnt = 0, i = a, start = 0, end = 0;
+    start = Math.ceil(Math.sqrt(a));
+    end=Math.floor(Math.sqrt(b));
+    return end - start + 1;
+}
+
+// Complete the libraryFine function below.
+var d1=9, m1=6, y1=2015, d2=6, m2=6, y2=2015;
+var d1=2, m1=7, y1=1014, d2=1, m2=1, y2=1015;
+function libraryFine(d1, m1, y1, d2, m2, y2) {
+if(y1>y2){
+    return 10000;
+}
+if(m1>m2 && y2==y1){
+    return (m1-m2)*500;
+}
+if(d1 > d2 && m1==m2 && y2==y1){
+    return (d1 - d2) * 15;
+}
+return 0;
+}
+
+
+// Complete the cutTheSticks function below.
+
+var arr = [1,2,3];//[3,2,1]
+var arr = [5,4,4,2,2,8];//6,4,2,1
+var arr = [1,2,3,4,3,3,2,1];//8,6,4,1
+function cutTheSticks(arr) {
+var ar = Array(1002).fill(0);
+var size = 0;
+for(var i = 0; i<arr.length;i++){
+    if(ar[arr[i]] == 0){
+        size++;
+    }
+    ar[arr[i]]++;
+}
+var idx = 0, cur = arr.length;
+var res = Array(size).fill(0);
+res[0] = arr.length;
+idx++;
+for(var i = 0; i<ar.length; i++){
+    if(ar[i]!=0){
+        cur -= ar[i];
+        res[idx]=cur;
+        idx ++;
+    }
+
+}
+return res.slice(0, res.length-1);
+}
+

@@ -260,3 +260,182 @@ function *main() {
 var it = main();
 // start it all up!
 it.next();
+
+//error handling in generators
+function *main() {
+var x = yield "Hello World";
+// never gets here
+console.log( x );
+}
+var it = main();
+it.next();
+try {
+// will `*main()` handle this error? we'll see!
+it.throw( "Oops" );
+}
+catch (err) {
+// nope, didn't handle it!
+console.error( err ); // Oops
+}
+
+//generator and promise
+
+function foo(x,y) {
+//async call
+    return request(
+        "http://some.url.1/?x=" + x + "&y=" + y
+    );
+}
+//generator is calling async function
+function *main() {
+    try {
+        var text = yield foo( 11, 31 );
+        console.log( text );
+    }
+    catch (err) {
+            console.error( err );
+        }
+    }
+//create iterator
+var it = main();
+var p = it.next().value;
+// wait for the `p` promise to resolve
+p.then(
+//fulfilment
+function(text){
+    it.next( text );
+},
+//error
+function(err){
+    it.throw( err );
+}
+);
+
+//axync utility to run promise based generators
+
+// thanks to Benjamin Gruenbaum (@benjamingr on GitHub) for
+// big improvements here!
+function run(gen) {
+var args = [].slice.call( arguments, 1), it;
+// initialize the generator in the current context
+it = gen.apply( this, args );
+// return a promise for the generator completing
+return Promise.resolve()
+.then( function handleNext(value){
+// run to the next yielded value
+var next = it.next( value );
+return (function handleResult(next){
+// generator has completed running?
+if (next.done) {
+return next.value;
+}
+// otherwise keep going
+else {
+return Promise.resolve( next.value )
+.then(
+// resume the async loop on
+// success, sending the resolved
+// value back into the generator
+//Promise-Aware Generator Runner
+//handleNext,
+// if `value` is a rejected
+// promise, propagate error back
+// into the generator for its own
+// error handling
+function handleErr(err) {
+return Promise.resolve(
+it.throw( err )
+)
+.then( handleResult );
+}
+);
+}
+})(next);
+} );
+}
+
+//async function
+function foo(x,y) {
+return request(
+"http://some.url.1/?x=" + x + "&y=" + y
+);
+}
+async function main() {
+try {
+var text = await foo( 11, 31 );
+console.log( text );
+}
+catch (err) {
+console.error( err );
+}
+}
+main();
+
+function *foo() {
+console.log( "`*foo()` starting" );
+yield 3;
+yield 4;
+console.log( "`*foo()` finished" );
+}
+function *bar() {
+yield 1;
+yield 2;
+yield *foo(); // `yield`-delegation!
+yield 5;
+}
+var it = bar();
+it.next().value; // 1
+it.next().value; // 2
+it.next().value; // `*foo()` starting
+// 3
+it.next().value; // 4
+it.next().value; // `*foo()` finished
+// 5
+
+
+function *foo() {
+console.log( "inside `*foo()`:", yield "B" );
+console.log( "inside `*foo()`:", yield "C" );
+return "D";
+}
+function *bar() {
+console.log( "inside `*bar()`:", yield "A" );
+//Why Delegation?
+//Delegating Messages
+// `yield`-delegation!
+console.log( "inside `*bar()`:", yield *foo() );
+console.log( "inside `*bar()`:", yield "E" );
+return "F";
+}
+var it = bar();
+console.log( "outside:", it.next().value );
+// outside: A
+console.log( "outside:", it.next( 1 ).value );
+// inside `*bar()`: 1
+// outside: B
+console.log( "outside:", it.next( 2 ).value );
+// inside `*foo()`: 2
+// outside: C
+console.log( "outside:", it.next( 3 ).value );
+// inside `*foo()`: 3
+// inside `*bar()`: D
+// outside: E
+console.log( "outside:", it.next( 4 ).value );
+// inside `*bar()`: 4
+// outside: F
+
+//web workers
+var w1 = new Worker( "http://some.url.1/mycoolworker.js" );
+w1.addEventListener( "message", function(evt){
+// evt.data
+} );
+
+w1.postMessage( "something cool to say" );
+//inside worker itself is symmetric "mycoolworker.js"
+addEventListener( "message", function(evt){
+// evt.data
+} );
+postMessage( "a really cool reply" );
+
+"Structured Cloning Algorithm" (https://developer.mozilla.org/en-
+US/docs/Web/Guide/API/DOM/The_structured_clone_algorithm)

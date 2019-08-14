@@ -791,3 +791,111 @@ for(var i = 0; i<ar.length; i++){
 return res.slice(0, res.length-1);
 }
 
+// Complete the nonDivisibleSubset function below.
+var s = [19,10,12,10,24,25,22], k = 4;//3
+var s = [1,7,2,4], k = 3;//3
+function nonDivisibleSubset(k, s) {
+
+var rem = Array(k).fill(0), res = 0;
+for(var i = 0; i<s.length;i++){
+    rem[s[i]%k]++;
+}
+if(rem[0]!=0){
+    res++;
+}
+if(k%2==0 && rem[k/2] != 0){
+    res++;
+}
+
+for(var i = 1; i<=k/2;i++){
+    if(i != k-i){
+        res += Math.max(rem[i], rem[k-i]);
+    }
+}
+return res;
+}
+
+// Complete the repeatedString function below.
+var s = "abcac", n = 10;//4
+var s = "abcac", n = 3;//1
+var s = "aba", n = 10;//7
+var s = "a", n = 10000;//10000
+function repeatedString(s, n) {
+var cnt = 0;
+var ar = s.split("");
+if(s.length >= n){
+    for(var i = 0; i<n;i++){
+        if(ar[i]=='a'){
+            cnt++;
+        }
+    }
+return cnt;
+}
+for(var i = 0; i< ar.length; i++){
+    if(ar[i] == 'a'){
+        cnt++;
+    }
+}
+
+cnt *= Math.floor(n/ar.length);
+
+for(var i = 0; i< n%ar.length;i++){
+    if(ar[i] == 'a'){
+        cnt++;
+    }
+}
+
+return cnt;
+}
+
+// Complete the jumpingOnClouds function below.
+var c = [0,1,0,0,0,1,0];//3
+var c = [0,0,1,0,0,1,0];//4
+var c = [0,0,0,0,1,0];//3
+function jumpingOnClouds(c) {
+var cnt = 0, idx = 0;
+while(idx < c.length-1){
+console.log(idx);
+    if(idx + 2 >= c.length - 1){
+        cnt++;
+        idx+=2;
+        continue;
+    }
+    if(c[idx + 2] == 0){
+        cnt++;
+        idx+=2;
+        continue;
+    }
+    if(c[idx + 1] == 0) {
+        cnt++;
+        idx+=1;
+        continue;
+    }
+}
+return cnt;
+}
+
+
+// Complete the taumBday function below.
+var b = 3, w = 5, bc =3 , wc =4 , z = 1;//29
+var b = 10, w =10 , bc =1 , wc =1 , z =1 ;//20
+var b = 5, w =9 , bc =2 , wc =3 , z =4 ;//37
+var b = 3, w =6 , bc =9 , wc =1 , z =1 ;//12
+var b = 7, w = 7, bc =4 , wc =2 , z =1 ;//35
+var b = 3, w = 3, bc = 1, wc =9 , z =2 ;//12
+function taumBday(b, w, bc, wc, z) {
+var sum = 0;
+
+if(Math.abs(bc - wc) <= z ){
+    sum = b*bc + w*wc;
+}else {
+    if(bc > wc){
+        sum = wc * w + (wc+z) * b;
+    }else{
+
+        sum =  b * bc + (bc + z)*w;
+    }
+}
+
+return sum;
+}

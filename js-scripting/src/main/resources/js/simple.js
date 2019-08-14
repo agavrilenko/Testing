@@ -439,3 +439,128 @@ postMessage( "a really cool reply" );
 
 "Structured Cloning Algorithm" (https://developer.mozilla.org/en-
 US/docs/Web/Guide/API/DOM/The_structured_clone_algorithm)
+
+//future capabilities
+var v1 = SIMD.float32x4( 3.14159, 21.0, 32.3, 55.55 );
+var v2 = SIMD.float32x4( 2.1, 3.2, 4.3, 5.4 );
+var v3 = SIMD.int32x4( 10, 101, 1001, 10001 );
+var v4 = SIMD.int32x4( 10, 20, 30, 40 );
+SIMD.float32x4.mul( v1, v2 ); // [ 6.597339, 67.2, 138.89, 299.97 ]
+SIMD.int32x4.add( v3, v4 ); // [ 20, 121, 1031, 10041 ]
+
+var newObj = JSON.parse( JSON.stringify( someObj ) );
+
+
+function f(...a){
+console.log(arguments);
+}
+
+var o1 = {
+a:3
+};
+var o2 = {
+__proto__: o1,
+b:9
+};
+
+//interpolating
+function upper(s) {
+return s.toUpperCase();
+}
+var who = "reader"
+var text =
+`A very ${upper( "warm" )} welcome
+to all of you ${upper( `${who}s` )}!`;
+console.log( text );
+// A very WARM welcome
+// to all of you READERS!
+
+`you are ${who} yo`;
+function bar(strings , ...vars){
+    console.log(strings);
+    console.log(vars);
+}
+
+function bar() {
+return function foo(strings, ...values) {
+console.log( strings );
+console.log( values );
+}
+}
+
+//string tags
+function dollabillsyall(strings, ...values) {
+return strings.reduce( function(s,v,idx){
+if (idx > 0) {
+if (typeof values[idx-1] == "number") {
+// look, also using interpolated
+// string literals!
+s += `$${values[idx-1].toFixed( 2 )}`;
+}
+else {
+s += values[idx-1];
+}
+}
+return s + v;
+}, "" );
+}
+var amt1 = 11.99,
+amt2 = amt1 * 1.08,
+name = "Kyle";
+var text = dollabillsyall
+`Thanks for your purchase, ${name}! Your
+product cost was ${amt1}, which with tax
+comes out to ${amt2}.`
+console.log( text );
+// Thanks for your purchase, Kyle! Your
+// product cost was $11.99, which with tax
+// comes out to $12.95.
+
+//arrow functions
+
+//regexp
+var re = /\d+\.\s(.*?)(?:\s|$)/y
+str = "1. foo 2. bar 3. baz";
+str.match( re ); // [ "1. foo ", "foo" ]
+re.lastIndex; // 7 -- correct position!
+str.match( re ); // [ "2. bar ", "bar" ]
+re.lastIndex; // 14 -- correct position!
+str.match( re ); // ["3. baz", "baz"]
+
+var re = /(o+.)/g, // <-- look, `g`!
+str = "foot book more";
+str.match( re ); // ["oot","ook","or"]
+
+var re = /foo/ig;
+re.flags;
+
+//Unicode conversion
+var s1 = "abc\u0301d",
+s2 = "ab\u0107d",
+s3 = "ab\u{1d49e}d";
+String.fromCodePoint( s1.normalize().codePointAt( 2 ) );
+// "ć"
+String.fromCodePoint( s2.normalize().codePointAt( 2 ) );
+// "ć"
+String.fromCodePoint( s3.normalize().codePointAt( 2 ) );
+// "𝒞"
+
+var gclef = "\u{1D11E}";
+console.log( gclef ); // "𝄞 "
+String.fromCodePoint( gclef.normalize().codePointAt( 1 ) );
+
+//iterator
+var arr = [1,2,3];
+var it = arr[Symbol.iterator]();
+it.next(); // { value: 1, done: false }
+it.next(); // { value: 2, done: false }
+it.next(); // { value: 3, done: false }
+it.next(); // { value: undefined, done: true }
+
+var m = new Map();
+m.set( "foo", 42 );
+m.set( { cool: true }, "hello world" );
+var it1 = m[Symbol.iterator]();
+var it2 = m.entries();
+it1.next(); // { value: [ "foo", 42 ], done: false }
+it2.next(); // { value: [ "foo", 42 ], done: false }

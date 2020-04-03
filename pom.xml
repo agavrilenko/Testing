@@ -236,6 +236,7 @@
         <module>bootclient</module>
         <module>kafka</module>
         <module>hackerrank</module>
+        <module>js-scripting</module>
     </modules>
 
 </project>

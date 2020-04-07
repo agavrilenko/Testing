@@ -9,8 +9,6 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.junit.Assert.*;
-
 @RunWith(Parameterized.class)
 public class URLifySolutionTest {
 
@@ -22,24 +20,25 @@ public class URLifySolutionTest {
         this.in = in;
         this.out = out;
     }
+
     @Before
-    public void init(){
+    public void init() {
         solution = new URLifySolution();
     }
 
 
     @Parameterized.Parameters
-    public static Collection values(){
+    public static Collection values() {
 
         return Arrays.asList(new Object[][]{
-                {"Mr John Smith    ","Mr%20John%20Smith"},
-                {"Mr John Smi th      ","Mr%20John%20Smi%20th"},
+                {"Mr John Smith    ", "Mr%20John%20Smith"},
+                {"Mr John Smi th      ", "Mr%20John%20Smi%20th"},
         });
 
     }
 
     @Test
-    public void test(){
+    public void test() {
         Assert.assertEquals(out, solution.getString(in));
     }
 }

@@ -16,7 +16,7 @@ public class RotateMatrixSolutionTest {
     }
 
     @Test
-    public void testSimple() {
+    public void testSimple3() {
         in = new int[][]{
                 {1, 2, 3},
                 {4, 5, 6},
@@ -30,7 +30,7 @@ public class RotateMatrixSolutionTest {
     }
 
     @Test
-    public void testSimple1() {
+    public void testSimple4() {
         in = new int[][]{
                 {5, 1, 9, 11},
                 {2, 4, 8, 10},

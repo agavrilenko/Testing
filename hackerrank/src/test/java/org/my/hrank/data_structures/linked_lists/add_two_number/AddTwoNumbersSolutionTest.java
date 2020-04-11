@@ -33,31 +33,13 @@ public class AddTwoNumbersSolutionTest {
 
     @Test
     public void test2() {
-        ListNode first = new ListNode(9);
 
-        ListNode second = new ListNode(1);
-        second.next = new ListNode(9);
-        second.next.next = new ListNode(9);
-        second.next.next.next = new ListNode(9);
-        second.next.next.next.next = new ListNode(9);
-        second.next.next.next.next.next = new ListNode(9);
-        second.next.next.next.next.next.next = new ListNode(9);
-        second.next.next.next.next.next.next.next = new ListNode(9);
-        second.next.next.next.next.next.next.next.next = new ListNode(9);
-        second.next.next.next.next.next.next.next.next.next = new ListNode(9);
-
-        ListNode expected = new ListNode(0);
-        expected.next = new ListNode(0);
-        expected.next.next = new ListNode(0);
-        expected.next.next.next = new ListNode(0);
-        expected.next.next.next.next = new ListNode(0);
-        expected.next.next.next.next.next = new ListNode(0);
-        expected.next.next.next.next.next.next = new ListNode(0);
-        expected.next.next.next.next.next.next.next = new ListNode(0);
-        expected.next.next.next.next.next.next.next.next = new ListNode(0);
-        expected.next.next.next.next.next.next.next.next.next = new ListNode(0);
-        expected.next.next.next.next.next.next.next.next.next.next = new ListNode(1);
-
+        int[] f = new int[]{9};
+        int[] s = new int[]{1, 9, 9, 9, 9, 9, 9, 9, 9, 9};
+        int[] r = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
+        ListNode first = createFromArray(f);
+        ListNode second = createFromArray(s);
+        ListNode expected = createFromArray(r);
 
         Solution solution = new Solution();
         ListNode result = solution.addTwoNumbers(first, second);

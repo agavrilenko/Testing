@@ -1,8 +1,6 @@
 package org.my.hrank.data_structures.linked_lists.add_two_number;
 
 
-import java.math.BigDecimal;
-
 public class AddTwoNumbersSolution {
 
 
@@ -17,34 +15,42 @@ public class AddTwoNumbersSolution {
 
     public static class Solution {
         public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-            java.math.BigDecimal first = new java.math.BigDecimal(0);
-            java.math.BigDecimal second = new java.math.BigDecimal(0);
-            java.math.BigDecimal result = new java.math.BigDecimal(0);
-            ListNode current = l1;
-            int pow = 0;
-            while (current != null) {
-                first = first.add((new java.math.BigDecimal(current.val)).multiply(new java.math.BigDecimal(10).pow(pow++)));
-                current = current.next;
-            }
-            current = l2;
-            pow = 0;
-            while (current != null) {
-                second = second.add((new java.math.BigDecimal(current.val)).multiply(new java.math.BigDecimal(10).pow(pow++)));
-                current = current.next;
-            }
-
-            result = first.add(second);
-
-            char resS[] = result.toPlainString().toCharArray();
-            int len = resS.length - 1;
-            ListNode root = new ListNode(Integer.valueOf("" + resS[len--]));
+            ListNode root = new ListNode((l1.val + l2.val) % 10);
+            int overflow = (l1.val + l2.val) / 10;
             ListNode next = root;
-            while (len > -1) {
-                next.next = new ListNode(Integer.valueOf("" + resS[len]));
-                next = next.next;
-                len--;
-            }
 
+            int value;
+            ListNode currentF = l1;
+            ListNode currentS = l2;
+            while (currentF.next != null || currentS.next != null) {
+
+                if (currentF.next != null && currentS.next != null) {
+                    value = (overflow + currentF.next.val + currentS.next.val) % 10;
+                    overflow = (overflow + currentF.next.val + currentS.next.val) / 10;
+                    next.next = new ListNode(value);
+                    currentF = currentF.next;
+                    currentS = currentS.next;
+                    next = next.next;
+                }
+                if (currentF.next != null && currentS.next == null) {
+                    value = (overflow + currentF.next.val) % 10;
+                    overflow = (overflow + currentF.next.val) / 10;
+                    next.next = new ListNode(value);
+                    currentF = currentF.next;
+                    next = next.next;
+                }
+
+                if (currentF.next == null && currentS.next != null) {
+                    value = (overflow + currentS.next.val) % 10;
+                    overflow = (overflow + currentS.next.val) / 10;
+                    next.next = new ListNode(value);
+                    currentS = currentS.next;
+                    next = next.next;
+                }
+            }
+            if (overflow != 0) {
+                next.next = new ListNode(overflow);
+            }
             return root;
         }
     }

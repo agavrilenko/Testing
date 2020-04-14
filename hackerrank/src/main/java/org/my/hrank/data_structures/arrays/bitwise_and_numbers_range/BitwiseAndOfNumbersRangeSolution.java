@@ -9,17 +9,19 @@ public class BitwiseAndOfNumbersRangeSolution {
         int pos = 0;
         int tail = 0;
         //moving one bit from right to left
+        int pow2 = 1;
         while (current > 0) {
             lastBit = current & 1;
             //calculate tail and check weather it is greater than number of elements in range
-            tail = lastBit * (int) Math.pow(2, pos) + tail;
+            tail = lastBit * pow2 + tail;
             //if tail greater than number of elements it means that major bits will remain same
-            if (Math.pow(2, pos + 1) - tail > depth) {
+            if (pow2 * 2 - tail > depth) {
                 break;
             }
             pos++;
             //bitwise move to the right.
             current = current >> 1;
+            pow2 *= 2;
         }
         current <<= pos;
         return current & m;

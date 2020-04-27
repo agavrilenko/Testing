@@ -10,6 +10,28 @@ public class SortedArrayToBSTSolution {
         return root;
     }
 
+    public TreeNode sortedListToBST(ListNode head) {
+        int length = 0;
+
+        ListNode next = head;
+
+        while (next != null) {
+            length++;
+            next = next.next;
+        }
+
+        int[] nums = new int[length];
+        int cnt = 0;
+        next = head;
+
+        while (next != null) {
+            nums[cnt++] = next.val;
+            next = next.next;
+        }
+
+        return sortedArrayToBST(nums);
+    }
+
     private TreeNode findRoot(int[] nums, int left, int right) {
         if (left > right) {
             return null;
@@ -27,7 +49,7 @@ public class SortedArrayToBSTSolution {
             return cnt;
         }
         storage[cnt] = root.val;
-        int next = cnt ;
+        int next = cnt;
         if (root.left != null) {
             next = inOrder(root.left, storage, cnt + 1);
         }
@@ -44,6 +66,16 @@ public class SortedArrayToBSTSolution {
         TreeNode right;
 
         TreeNode(int x) {
+            val = x;
+        }
+    }
+
+
+    public class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
             val = x;
         }
     }

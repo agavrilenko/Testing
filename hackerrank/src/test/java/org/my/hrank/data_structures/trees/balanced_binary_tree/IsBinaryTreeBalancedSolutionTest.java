@@ -30,9 +30,9 @@ public class IsBinaryTreeBalancedSolutionTest {
     @Parameterized.Parameters
     public static Collection params() {
         return Arrays.asList(new Object[][]{
-                {new int[]{-1, 3, 9, 20, -1, -1, 15, 17}, true},
-                {new int[]{-1, 1, 2, 2, 3, 3, -1, -1, 4, 4}, false},
-                {new int[]{-1, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, -1, -1, 5, 5}, true},
+                {new int[]{ 3, 9, 20, -1, -1, 15, 17}, true},
+                {new int[]{ 1, 2, 2, 3, 3, -1, -1, 4, 4}, false},
+                {new int[]{ 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, -1, -1, 5, 5}, true},
 
 
         });

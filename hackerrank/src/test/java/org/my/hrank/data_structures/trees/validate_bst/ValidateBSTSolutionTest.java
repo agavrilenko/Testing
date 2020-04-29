@@ -29,9 +29,9 @@ public class ValidateBSTSolutionTest {
     @Parameterized.Parameters
     public static Collection params() {
         return Arrays.asList(new Object[][]{
-                {new int[]{-1, 2, 1, 3}, true},
-                {new int[]{-1, 1, 1}, false},
-                {new int[]{-1, 5, 1, 4, -1, -1, 3, 6}, false},
+                {new int[]{ 2, 1, 3}, true},
+                {new int[]{ 1, 1}, false},
+                {new int[]{ 5, 1, 4, -1, -1, 3, 6}, false},
 
 
         });

@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.my.hrank.data_structures.trees.TreeUtils;
+import org.my.hrank.utils.TreeUtils;
 
 import java.util.Arrays;
 import java.util.Collection;

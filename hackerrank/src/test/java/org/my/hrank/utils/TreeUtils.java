@@ -1,4 +1,6 @@
-package org.my.hrank.data_structures.trees;
+package org.my.hrank.utils;
+
+import org.my.hrank.data_structures.trees.TreeNode;
 
 public class TreeUtils {
 

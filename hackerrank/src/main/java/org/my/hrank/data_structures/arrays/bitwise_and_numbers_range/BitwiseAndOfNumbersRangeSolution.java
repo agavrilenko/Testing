@@ -1,5 +1,9 @@
 package org.my.hrank.data_structures.arrays.bitwise_and_numbers_range;
 
+/**
+ * Bitwise AND of Numbers Range https://leetcode.com/problems/bitwise-and-of-numbers-range/
+ * time optimization
+ */
 public class BitwiseAndOfNumbersRangeSolution {
 
     public int rangeBitwiseAnd(int m, int n) {

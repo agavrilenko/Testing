@@ -2,6 +2,9 @@ package org.my.hrank.data_structures.trees.balanced_binary_tree;
 
 import org.my.hrank.data_structures.trees.TreeNode;
 
+/**
+ * Balanced binary tree. https://leetcode.com/problems/balanced-binary-tree/
+ */
 public class IsBinaryTreeBalancedSolution {
 
     boolean isBalanced = true;

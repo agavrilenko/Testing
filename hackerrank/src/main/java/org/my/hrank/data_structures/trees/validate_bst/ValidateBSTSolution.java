@@ -2,6 +2,9 @@ package org.my.hrank.data_structures.trees.validate_bst;
 
 import org.my.hrank.data_structures.trees.TreeNode;
 
+/**
+ * Validate BST. https://leetcode.com/problems/validate-binary-search-tree/
+ */
 public class ValidateBSTSolution {
 
     public boolean isValidBST(TreeNode root) {

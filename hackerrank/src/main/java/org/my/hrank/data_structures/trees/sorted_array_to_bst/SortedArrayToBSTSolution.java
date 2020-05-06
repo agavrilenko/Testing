@@ -1,5 +1,8 @@
 package org.my.hrank.data_structures.trees.sorted_array_to_bst;
 
+/**
+ * Sorted Array to BST https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/. solution for singly linked list.
+ */
 public class SortedArrayToBSTSolution {
 
 

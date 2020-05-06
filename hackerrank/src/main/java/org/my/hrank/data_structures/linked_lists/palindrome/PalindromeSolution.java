@@ -1,5 +1,8 @@
 package org.my.hrank.data_structures.linked_lists.palindrome;
 
+/**
+ * Palindrome linked list https://leetcode.com/problems/palindrome-linked-list/
+ */
 public class PalindromeSolution {
 
 

@@ -4,6 +4,9 @@ import org.my.hrank.data_structures.trees.TreeNode;
 
 import java.util.ArrayList;
 
+/**
+ * Subtree of another subtree. https://leetcode.com/problems/subtree-of-another-tree/
+ */
 public class SubtreeOfAnotherTree {
     public boolean isSubtree(TreeNode s, TreeNode t) {
 

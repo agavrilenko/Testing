@@ -4,6 +4,9 @@ import org.my.hrank.data_structures.trees.TreeNode;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Path to sum. https://leetcode.com/problems/path-sum-iii/
+ */
 public class PathToSum {
 
     public int pathSum(TreeNode root, int sum) {

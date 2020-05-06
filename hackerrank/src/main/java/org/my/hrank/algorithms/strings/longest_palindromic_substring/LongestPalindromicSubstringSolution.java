@@ -1,5 +1,9 @@
 package org.my.hrank.algorithms.strings.longest_palindromic_substring;
 
+/**
+ * Longest palindromic substring
+ * https://leetcode.com/problems/longest-palindromic-substring
+ */
 public class LongestPalindromicSubstringSolution {
     public String longestPalindrome(String s) {
 

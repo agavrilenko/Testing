@@ -2,6 +2,9 @@ package org.my.hrank.data_structures.trees.bst_least_common_ancestor;
 
 import org.my.hrank.data_structures.trees.TreeNode;
 
+/**
+ * Lowest Common Ancestor of a Binary Tree. https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
+ */
 public class LowestCommonAncestorSolution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 

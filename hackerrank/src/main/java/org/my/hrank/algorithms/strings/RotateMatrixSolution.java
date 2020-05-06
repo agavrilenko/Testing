@@ -1,5 +1,8 @@
 package org.my.hrank.algorithms.strings;
 
+/**
+ * Rotate matrix: https://leetcode.com/problems/rotate-image
+ */
 public class RotateMatrixSolution {
     public int[][] rotate(int[][] matrix) {
         int len = matrix.length;

@@ -1,5 +1,8 @@
 package org.my.hrank.data_structures.linked_lists.delete_node;
 
+/**
+ * Delete node in linked list: https://leetcode.com/problems/delete-node-in-a-linked-list
+ */
 public class DeleteNodeInSinglyLinkedSolution {
 
 

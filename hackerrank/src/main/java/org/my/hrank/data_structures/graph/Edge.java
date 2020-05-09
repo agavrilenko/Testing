@@ -44,6 +44,14 @@ public class Edge implements Comparable<Edge> {
     }
 
     @Override
+    public String toString() {
+        return "Edge{" +
+                "from=" + from +
+                ", to=" + to +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(from, to, getWeight());
     }

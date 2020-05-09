@@ -1,5 +1,8 @@
 package org.my.hrank.utils;
 
+import org.my.hrank.data_structures.graph.DirectedWeightedGraph;
+import org.my.hrank.data_structures.graph.Edge;
+
 import java.util.List;
 
 public class GraphUtils {
@@ -18,5 +21,13 @@ public class GraphUtils {
 
         }
         return source;
+    }
+
+    public static DirectedWeightedGraph createWeighedDirectedGraph(List<Edge> in, int cnt) {
+        DirectedWeightedGraph graph = new DirectedWeightedGraph(cnt);
+        for (Edge e : in) {
+            graph.add(e);
+        }
+        return graph;
     }
 }

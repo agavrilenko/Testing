@@ -42,9 +42,11 @@ public class ShortestPathDijkstraTest {
                         new Edge(3, 6, 9), new Edge(4, 5, 4), new Edge(4, 6, 20),
                         new Edge(4, 7, 5), new Edge(5, 2, 1), new Edge(5, 6, 13),
                         new Edge(7, 5, 6), new Edge(7, 2, 7)), 8, 0, 6, new int[]{6, 2, 5, 4, 0}},
-                {Arrays.asList(new Edge(0, 1, 1), new Edge(0, 4, 10), new Edge(1, 2, 1),
+                {Arrays.asList(new Edge(0, 1, 2), new Edge(0, 4, 10), new Edge(1, 2, 1),
                         new Edge(1, 4, 6), new Edge(1, 3, 3), new Edge(2, 3, 1),
-                        new Edge(3, 4, 1)), 5, 0, 4, new int[]{4, 3, 2, 1, 0}}
+                        new Edge(3, 4, 1), new Edge(3, 1, 1)), 5, 0, 4, new int[]{4, 3, 2, 1, 0}},
+                {Arrays.asList(new Edge(0, 1, 4), new Edge(1, 2, 6), new Edge(2, 3, -9),
+                        new Edge(0, 3, 2)), 4, 0, 3, new int[]{3, 2, 1, 0}}
         });
     }
 

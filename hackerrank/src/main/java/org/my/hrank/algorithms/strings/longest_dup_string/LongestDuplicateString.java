@@ -15,26 +15,29 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Binary Search:
  * <p>
- * We do binary search on the duplicate substring length, for example if we know a length 10 substring has duplicate, then there is no need to test any substring with length smaller than 10 right?
+ * We do binary search on the duplicate substring length, for example if we know a length 10
+ * substring has duplicate, then there is no need to test any substring with length smaller than 10 right?
  * <p>
  * Rolling Hash:
  * Take this string "12121" as an example, we want to find out whether we have duplicate substring with length 3:
  * <p>
- * A simple hash computation for its 1st 3 character substring "121" would be 1*10^2 + 2*10^1 + 1*10^0 = 121 (basically we used its decimal value as its unique hash in this example)
+ * A simple hash computation for its 1st 3 character substring "121" would be 1*10^2 + 2*10^1 + 1*10^0 = 121
+ * (basically we used its decimal value as its unique hash in this example)
  * For 2nd substring "212" would be (121 - 1*10^2) * 10 + 2 * 10^0 = 212
  * For 3rd substring "121" would be (212 - 2*10^2) * 10 + 1 * 10^0 = 121 and we now have a collision!
  * <p>
- * Did you notice the hash computation is constant time for each substring? That's the key of this algorithm, we can use previous substring's hash to compute the current substring's hash because current substring is simply previous substring with first character removed and new character added to the end.
+ * Did you notice the hash computation is constant time for each substring?
+ * That's the key of this algorithm, we can use previous substring's hash to compute the current
+ * substring's hash because current substring is simply previous substring with first character
+ * removed and new character added to the end.
  * <p>
  * Princeton's JAVA code on RabinKarp: https://algs4.cs.princeton.edu/53substring/RabinKarp.java.html
- *
+ * <p>
  * Second  place is sort and compare.
- *
+ * <p>
  * Ternar trie 3d - memory
- *
+ * <p>
  * Regular trie 4th - memory
- *
- *
  */
 public class LongestDuplicateString {
 
@@ -55,17 +58,23 @@ public class LongestDuplicateString {
             long hash = hash(S, len);
             map.put(hash, new ArrayList<>());
             map.get(hash).add(0);
-            long RM = 1l;
-            for (int i = 1; i < len; i++) RM = (R * RM) % q;
+            //calculate reminder for R^M
+            long RM = 1L;
+            for (int i = 1; i < len; i++) {
+                RM = (R * RM) % q;
+            }
 
             loop:
-
+            //go over the string and see which sequences have the same hash.
             for (int i = 1; i + len <= S.length(); i++) {
+                // Remove leading digit, add trailing digit, check for match.
+                //add q in order to make sure that value is greater than 0. q%q == 0
                 hash = (hash + q - RM * S.charAt(i - 1) % q) % q;
                 hash = (hash * R + S.charAt(i + len - 1)) % q;
                 if (!map.containsKey(hash)) {
                     map.put(hash, new ArrayList<>());
                 } else {
+                    //if collides needs to check with others for equality
                     for (int j : map.get(hash)) {
                         if (compare(S, i, j, len)) {
                             found = true;
@@ -77,8 +86,11 @@ public class LongestDuplicateString {
                 }
                 map.get(hash).add(i);
             }
-            if (found) left = len + 1;
-            else right = len - 1;
+            if (found) {
+                left = len + 1;
+            } else {
+                right = len - 1;
+            }
         }
 
         return S.substring(start, start + maxLen);
@@ -86,13 +98,17 @@ public class LongestDuplicateString {
 
     private long hash(String S, int len) {
         long h = 0;
-        for (int j = 0; j < len; j++) h = (R * h + S.charAt(j)) % q;
+        for (int j = 0; j < len; j++) {
+            h = (R * h + S.charAt(j)) % q;
+        }
         return h;
     }
 
     private boolean compare(String S, int i, int j, int len) {
         for (int count = 0; count < len; count++) {
-            if (S.charAt(i++) != S.charAt(j++)) return false;
+            if (S.charAt(i++) != S.charAt(j++)) {
+                return false;
+            }
         }
         return true;
     }

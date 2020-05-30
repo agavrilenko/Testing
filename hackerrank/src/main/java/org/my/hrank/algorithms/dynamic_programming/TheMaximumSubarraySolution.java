@@ -5,6 +5,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * https://www.hackerrank.com/challenges/maxsubarray/problem
+ *
+ */
 public class TheMaximumSubarraySolution {
 
     // Complete the maxSubarray function below.

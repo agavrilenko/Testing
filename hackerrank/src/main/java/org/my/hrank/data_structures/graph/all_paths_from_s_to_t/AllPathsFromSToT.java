@@ -24,7 +24,7 @@ public class AllPathsFromSToT {
             LinkedList<Integer> print = new LinkedList<>();
             while (pathTo[src] != src) {
                 print.addFirst(src);
-                src = pathTo[src];
+            src = pathTo[src];
             }
             print.addFirst(src);
             list.add(print);

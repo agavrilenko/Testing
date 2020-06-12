@@ -18,6 +18,7 @@ public class ReplaceWordsTest {
     public static Object[][] data() {
         return new Object[][]{
                 {Arrays.asList("cat", "bat", "rat"), "the cattle was rattled by the battery", "the cat was rat by the bat"},
+                {Arrays.asList("bet", "gam","om"), "alpha betta gamma theta epsilon omega phy", "alpha bet gam theta epsilon om phy"},
         };
     }
 

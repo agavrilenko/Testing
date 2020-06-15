@@ -1,20 +1,27 @@
 package org.my.testing.concurrency.complFeature;
 
-import javafx.beans.Observable;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
-import java.util.function.IntBinaryOperator;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
 
 /**
  * Created by trash on 06-Sep-16.
@@ -213,6 +220,9 @@ public class ComplFutureTest {
         Assert.assertEquals(finalStage.get(), "THE QUICK BROWN FOX JUMPED OVER the lazy dog");
 
     }
+
+
+
 
     private Supplier<String> simulatedTask(int i, String s) {
         return new Supplier<String>() {

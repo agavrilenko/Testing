@@ -6,7 +6,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.StringJoiner;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -201,6 +206,14 @@ public class StreamTest {
                 .get();
 
         Assert.assertEquals(PAMELA, person);
+    }
+
+    @Test
+    public void testReduce1() {
+
+        int sum = IntStream.range(1, 11).map(v -> v * 2).filter(value -> value % 3 == 0).reduce(0, (left, right) -> left + right);
+        Assert.assertEquals(36, sum);
+
     }
 
     @Test

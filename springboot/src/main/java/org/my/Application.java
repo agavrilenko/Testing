@@ -22,7 +22,8 @@ public class Application {
 
     @Autowired
     HelloHandler helloProducer;
-//http://localhost:8080/users/5/customers
+
+    //http://localhost:8080/users/5/customers
     @RequestMapping("/rest/")
     String home() {
         return helloProducer.returnHello();
@@ -40,6 +41,7 @@ public class Application {
     /**
      * Register dispatcherServlet programmatically
      * http://localhost:8080/service/SoapContext?wsdl
+     *
      * @return ServletRegistrationBean
      */
     @Bean

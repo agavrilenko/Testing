@@ -1,0 +1,4 @@
+spring boot with jsp.
+https://howtodoinjava.com/spring-boot/spring-boot-jsp-view-example/
+testing web mvc
+https://spring.io/guides/gs/testing-web/

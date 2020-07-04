@@ -12,6 +12,7 @@ import quickfix.field.ResetSeqNumFlag;
 import quickfix.fix44.Logon;
 
 import java.io.FileNotFoundException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Configuration
 public class FixClientConfiguration {
@@ -32,9 +33,11 @@ public class FixClientConfiguration {
 
         Initiator initiator = new SocketInitiator(application, storeFactory, settings, logFactory, messageFactory);
         initiator.start();
-        while (!initiator.isLoggedOn()) {
+        AtomicInteger retryCount = new AtomicInteger(0);
+        while (!initiator.isLoggedOn() && retryCount.get() < 10) {
             sendLogonRequest(initiator.getSessions().get(0));
             Thread.sleep(5000);
+            retryCount.incrementAndGet();
         }
     }
 

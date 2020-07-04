@@ -1,5 +1,6 @@
 package org.my.kafka;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.my.kafka.consumer.SimpleConsumer;
 
@@ -8,6 +9,7 @@ import org.my.kafka.consumer.SimpleConsumer;
  */
 public class SimpleConsumerTest {
     @Test
+    @Ignore
     public void test() {
         SimpleConsumer consumer = new SimpleConsumer();
         consumer.consume();

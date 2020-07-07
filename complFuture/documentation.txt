@@ -1,1 +1,2 @@
 https://mkyong.com/tutorials/java-8-tutorials/
+https://www.geeksforgeeks.org/hashing-in-java/ - hash maps

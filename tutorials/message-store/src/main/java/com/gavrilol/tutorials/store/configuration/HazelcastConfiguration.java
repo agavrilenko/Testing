@@ -13,16 +13,18 @@ import java.util.concurrent.ConcurrentMap;
 public class HazelcastConfiguration {
 
     private ConcurrentMap<String, FixModel> quotes;
-    private HazelcastInstance hazelcastInstance = Hazelcast.newHazelcastInstance();
+    private HazelcastInstance hazelcastInstance;
 
     @PostConstruct
     private void quoteInit() {
+        if (hazelcastInstance == null) {
+            hazelcastInstance = Hazelcast.newHazelcastInstance();
+        }
         quotes = hazelcastInstance.getMap("quotes");
     }
 
     @Bean
     public ConcurrentMap<String, FixModel> getQuotes() {
-//        HazelcastInstance hazelcastInstance = Hazelcast.newHazelcastInstance();
 //        ConcurrentMap<String, FixModel> quotes = hazelcastInstance.getMap("quotes");
         return quotes;
     }

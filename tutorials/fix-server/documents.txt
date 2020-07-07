@@ -1,0 +1,2 @@
+https://github.com/quickfix-j/quickfixj
+https://www.quickfixj.org/usermanual/2.1.0/

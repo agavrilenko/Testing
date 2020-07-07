@@ -44,6 +44,8 @@ public class FixClientConfiguration {
     private static void sendLogonRequest(SessionID sessionId)
             throws SessionNotFound {
         Logon logon = new Logon();
+        //todo 8=FIX.4.49=11035=534=649=EXEC52=20200704-00:00:31.18356=BANZAI58=Invalid Logon message: Required tag missing, field=9810=118
+        //8=FIX.4.49=6635=A34=149=BANZAI52=20200704-00:00:36.18156=EXEC108=30141=Y10=028
         Message.Header header = logon.getHeader();
         header.setField(new BeginString("FIX.4.4"));
         logon.set(new HeartBtInt(30));

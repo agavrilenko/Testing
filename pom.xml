@@ -22,7 +22,7 @@
         <jaxrs.version>3.1.9</jaxrs.version>
         <cxf-bundle-jaxrs.version>2.7.18</cxf-bundle-jaxrs.version>
         <jettyson.version>1.3.8</jettyson.version>
-        <jackson.version>2.10.4</jackson.version>
+        <jackson.version>2.13.4.1</jackson.version>
         <kafka.version>2.5.0</kafka.version>
         <boot.version>2.3.1.RELEASE</boot.version>
         <java.version>1.8</java.version>
